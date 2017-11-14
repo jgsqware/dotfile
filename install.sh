@@ -29,8 +29,9 @@ i tmux \
     xclip 
 
 ln -fs ${DOTFILE}/.tmux.conf ${HOME}/.tmux.conf
-
-y tmuxinator
+if [[ -z /usr/bin/tmuxinator ]]; then
+    y  tmuxinator
+fi
 ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
 # Neovim
 
@@ -56,24 +57,35 @@ nvim -c "PlugInstall"
 # Software
 if [[ -z /usr/bin/enpass ]]; then
     y  enpass-bin
-
-    echo "Copy SSH key from Enpass BEFORE CONTINUING"
-    echo "Press Enter to continue"
-    read secondyn < /dev/tty
-    
-    chmod 400 ~/.ssh/id_rsa
-    
-    echo "Copy gpg key in /tmp from Enpass BEFORE CONTINUING"
-    echo "Press Enter to continue"
-
-    gpg --import /tmp/gpg-private-keys.asc
-    gpg --import /tmp/gpg-public-keys.asc
-    gpg --import-ownertrust /tmp/otrust.txt
-
-    rm -f /tmp/gpg-private-keys.asc /tmp/gpg-public-keys.asc /tmp/otrust.txt
 fi
 
 # Git
 
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
+
+# Keybase
+if [[ -z /usr/bin/keybase ]]; then
+    y keybase-bin
+fi
+run_keybase
+
+echo "Connect to keybase"
+read -p "Press any key to continue... " -n1 -s
+
+if [[ -z ${HOME}/.config/kb_dotfile ]]; then
+    git clone keybase://private/jgsqware/dotfile ${HOME}/.config/kb_dotfile
+else
+    git --git-dir=$HOME/.config/kb_dotfile/.git --work-tree=$HOME/.config/kb_dotfile pull -r
+fi
+
+sudo cp -ar ${HOME}/.config/kb_dotfile/ssh/. ~/.ssh/
+chmod 400 ~/.ssh/id_rsa
+gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
+gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
+gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
+
+# Kubernetes
+
+y kubernetes-helm-bin \
+    kubectl-bin

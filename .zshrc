@@ -8,6 +8,7 @@ plugins=(git docker docker-compose go tmux aws)
 # Environment Variable
 export XDG_CONFIG_HOME="${HOME}/.config"
 export DOTFILE="${HOME}/.config/dotfile"
+export KB_DOTFILE="${HOME}/.config/kb_dotfile"
 export GOPATH="${HOME}/go"
 
 export LESS=' -R '
@@ -25,12 +26,18 @@ export PATH="$HOME/.rvm/bin:$PATH"
 
 
 # Aliases
-source ~/.profile
 for file in ${DOTFILE}/aliases/**/*(.); do
     source "$file"
 done
 
+for file in ${KB_DOTFILE}/aliases/**/*(.); do
+    source "$file"
+done
+
 # Functions
+for file in ${KB_DOTFILE}/functions/**/*(.); do
+    source "$file"
+done
 for file in ${DOTFILE}/functions/**/*(.); do
     source "$file"
 done
@@ -39,5 +46,5 @@ done
 source /usr/share/fzf/key-bindings.zsh 
 source /usr/share/fzf/completion.zsh
 source <(helm completion zsh)
-source ~/.config/tmuxinator.zsh
+source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
 source <(kubectl completion zsh)
