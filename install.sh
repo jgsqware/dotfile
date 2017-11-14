@@ -87,5 +87,5 @@ gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 
 # Kubernetes
 
-y kubernetes-helm-bin \
-    kubectl-bin
+#y kubernetes-helm-bin \
+#    kubectl-bin
