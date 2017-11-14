@@ -1,0 +1,5 @@
+.svn
+.gradle
+*.iml
+.vagrant
+.vscode/
