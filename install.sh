@@ -30,6 +30,8 @@ i tmux \
 
 ln -fs ${DOTFILE}/.tmux.conf ${HOME}/.tmux.conf
 
+y tmuxinator
+ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
 # Neovim
 
 i neovim \

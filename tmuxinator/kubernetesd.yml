@@ -1,0 +1,8 @@
+# ~/.tmuxinator/kubernetesd.yml
+
+name: kubernetesd
+root: ~/workspace/go/src/github.com/giantswarm/kubernetesd
+
+windows:
+  - nvim: nvim
+  - term: 
