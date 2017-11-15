@@ -8,6 +8,12 @@ function y() {
 }
 DOTFILE=${HOME}/.config/dotfile
 
+# Git
+i git
+ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
+ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
+
+
 # Shell
 
 i termite \
@@ -33,6 +39,13 @@ if [[ -z /usr/bin/tmuxinator ]]; then
     y  tmuxinator
 fi
 ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
+
+# Python
+
+i python2 \ 
+    python-pip \
+    python2-pip
+
 # Neovim
 
 i neovim \
@@ -50,8 +63,8 @@ nvim -c "PlugInstall"
 
 # Go
 
-#i go
-#nvim -c "GoInstallBinaries"
+i go
+nvim -c "GoInstallBinaries"
 #${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 
 # Software
@@ -59,10 +72,8 @@ if [[ -z /usr/bin/enpass ]]; then
     y  enpass-bin
 fi
 
-# Git
+sudo pip install mdv
 
-ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
-ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
 
 # Keybase
 if [[ -z /usr/bin/keybase ]]; then
@@ -85,7 +96,16 @@ gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
 gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
 gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 
+# Docker
+
+i docker \
+    docker-compose
+
 # Kubernetes
 
 #y kubernetes-helm-bin \
-#    kubectl-bin
+    #kubectl-bin
+
+# Firefox
+
+i firefox

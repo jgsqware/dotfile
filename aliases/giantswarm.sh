@@ -1,5 +1,4 @@
-#!/bin/zsh
-
+#!/bin/zsh 
 export GS="$GOPATH/src/github.com/giantswarm/"
 export GS_AWS_OPERATOR="~/.ssh/aws-operator"
 alias gingerctl="gsctl --endpoint https://api.g8s.ginger.eu-central-1.aws.gigantic.io --auth-token $GS_GINGER_AUTH_TOKEN"
@@ -21,4 +20,20 @@ function gs_support_start() {
 function gs_support_stop() {
     slackutil unstar --include "support"
     slackutil mute --include "support-*"
+}
+
+function gs_invite_gauss() {
+    PASSAGE_ENDPOINT="https://passage.g8s.gauss.eu-central-1.aws.gigantic.io"
+    GS_AUTH_TOKEN="$GS_GAUSS_AUTH_TOKEN"
+    ORGNAME=giantswarm
+    EMAIL=$1
+    curl -X POST ${PASSAGE_ENDPOINT}/invite/ \
+     -H "Authorization: giantswarm ${GS_AUTH_TOKEN}" \
+     -H "Content-Type:application/json" \
+     -d "{ 
+        \"email\": \"${EMAIL}\", 
+        \"organizations\": [\"${ORGNAME}\"], 
+        \"send_email\": true, 
+        \"account_expiry_days\": 1000
+      }"
 }
