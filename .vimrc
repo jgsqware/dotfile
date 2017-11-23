@@ -93,7 +93,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 " codedark theme
-colorscheme codedark
+colorscheme base16-oceanicnext
 set termguicolors
 "let g:rehash256 = 1
 
@@ -113,4 +113,5 @@ Plug 'yuttie/comfortable-motion.vim'
 Plug 'ErichDonGubler/nerdtree-plugin-open-in-file-browser' | Plug 'ErichDonGubler/vim-file-browser-integration'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'chriskempson/base16-vim'
 call plug#end()

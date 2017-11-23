@@ -10,7 +10,11 @@ function y() {
 DOTFILE=${HOME}/.config/dotfile
 export XDG_CONFIG_HOME="${HOME}/.config"
 
-sudo pacman-key --refresh-keys
+function p(){
+    pip install "$1" --user
+}
+
+# sudo pacman-key --refresh-keys
 # Git
 i git \
     openssh \
@@ -62,7 +66,8 @@ gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 if [[ ! -d ${HOME}/.config/dotfile ]]; then
     git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
 else
-    git --git-dir=$HOME/.config/dotfile/.git --work-tree=$HOME/.config/dotfile pull -r
+    #git --git-dir=$HOME/.config/dotfile/.git --work-tree=$HOME/.config/dotfile pull -r
+    echo "test"
 fi
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
@@ -71,10 +76,10 @@ ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
 
 # Shell
 
-pacman --remove vte3 && pacman -S termite
+sudo pacman -S termite
 i ttf-hack
 mkdir -p ${HOME}/.config/termite
-ln -fs ${DOTFILE}/termite.config ${HOME}/.config/termite/config
+ln -fs ${DOTFILE}/termite/termite.config ${HOME}/.config/termite/config
 ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
 
 if [[ ! -d /usr/share/oh-my-zsh ]]; then
@@ -115,18 +120,18 @@ ln -fs ${DOTFILE}/.vimrc ${HOME}/.config/nvim/init.vim
 mkdir -p ${HOME}/.config/nvim/colors
 ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
 
-nvim -c "PlugInstall"
+nvim -c "PlugInstall|qa"
 
 # Go
 
 i go
-nvim -c "GoInstallBinaries"
+nvim -c "GoInstallBinaries|qa"
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
+
 # Software
 
-
-sudo pip install --user mdv \
-	aws-cli
+p mdv \
+    awscli
 
 # Docker
 

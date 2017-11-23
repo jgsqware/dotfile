@@ -16,7 +16,7 @@ export EDITOR=nvim
 export CDPATH=".:$GOPATH/src/github.com/giantswarm"
 
 # Common
-export PATH="$PATH/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin"
+export PATH="$PATH/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/.local/bin"
 # Go
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Python
@@ -46,5 +46,5 @@ done
 source /usr/share/fzf/key-bindings.zsh 
 source /usr/share/fzf/completion.zsh
 source <(helm completion zsh)
-source /usr/lib/ruby/gems/2.4.0/gems/tmuxinator-0.9.0/completion/tmuxinator.zsh
+source  ${DOTFILE}/completions/tmuxinator.zsh
 source <(kubectl completion zsh)
