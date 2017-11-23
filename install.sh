@@ -117,7 +117,7 @@ nvim -c "PlugInstall"
 i go
 nvim -c "GoInstallBinaries"
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
-
+nvim -c "YcmRestartServer"
 # Software
 
 
@@ -133,7 +133,12 @@ i docker \
 
 # Kubernetes
 
-y kubernetes-helm-bin \
-    kubectl-bin
+if [[ ! -f /usr/bin/helm ]]; then
+    y kubernetes-helm-bin
+fi
+
+if [[ ! -f /usr/bin/kubectl ]]; then
+    y kubectl-bin
+fi
 
 
