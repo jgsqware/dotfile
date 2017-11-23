@@ -73,6 +73,8 @@ if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
 
+source ${HOME}/.zshrc
+
 # fzf
 i fzf \
     the_silver_searcher
