@@ -122,7 +122,6 @@ nvim -c "PlugInstall"
 i go
 nvim -c "GoInstallBinaries"
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
-nvim -c "YcmRestartServer"
 # Software
 
 
