@@ -8,10 +8,12 @@ function y() {
 }
 DOTFILE=${HOME}/.config/dotfile
 
+sudo pacman-key --refresh-keys
 # Git
 i git
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
+
 
 
 # Shell
