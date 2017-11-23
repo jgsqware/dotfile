@@ -14,7 +14,7 @@ i yaourt
 i git
 
 # Keybase
-if [[ -z /usr/bin/keybase ]]; then
+if [[ ! -f /usr/bin/keybase ]]; then
     y keybase-bin
 fi
 run_keybase
@@ -61,7 +61,7 @@ i tmux \
     xclip 
 
 ln -fs ${DOTFILE}/.tmux.conf ${HOME}/.tmux.conf
-if [[ -z /usr/bin/tmuxinator ]]; then
+if [[ ! -f /usr/bin/tmuxinator ]]; then
     y  tmuxinator
 fi
 ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
@@ -95,7 +95,7 @@ nvim -c "GoInstallBinaries"
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 
 # Software
-if [[ -z /usr/bin/enpass ]]; then
+if [[ ! -f /usr/bin/enpass ]]; then
     y  enpass-bin
 fi
 
@@ -111,8 +111,8 @@ i docker \
 
 # Kubernetes
 
-#y kubernetes-helm-bin \
-    #kubectl-bin
+y kubernetes-helm-bin \
+    kubectl-bin
 
 # Firefox
 
