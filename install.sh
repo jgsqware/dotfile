@@ -10,7 +10,8 @@ DOTFILE=${HOME}/.config/dotfile
 
 #sudo pacman-key --refresh-keys
 # Git
-i git
+i git \
+    ssh
 
 # yaourt
 if [[ ! -f /usr/bin/yaourt ]]; then
@@ -55,9 +56,9 @@ gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
 gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
 gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 
+git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
-git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
 
 
 
