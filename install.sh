@@ -70,7 +70,7 @@ ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
 
 # Shell
 
-pacinstall termite --remove vte3
+pacman -S termite --remove vte3
 i ttf-hack
 mkdir -p ${HOME}/.config/termite
 ln -fs ${DOTFILE}/termite.config ${HOME}/.config/termite/config
