@@ -13,16 +13,18 @@ DOTFILE=${HOME}/.config/dotfile
 i git
 
 # yaourt
-sudo pacman -S --needed base-devel git wget yajl
-git clone https://aur.archlinux.org/package-query.git
-cd package-query/
-makepkg -si
-cd ..
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt/
-makepkg -si
-cd ..
-sudo rm -dR yaourt/ package-query/
+if [[ ! -f /usr/bin/yaourt ]]; then
+    sudo pacman -S --needed base-devel git wget yajl
+    git clone https://aur.archlinux.org/package-query.git
+    cd package-query/
+    makepkg -si
+    cd ..
+    git clone https://aur.archlinux.org/yaourt.git
+    cd yaourt/
+    makepkg -si
+    cd ..
+    sudo rm -dR yaourt/ package-query/
+fi
 
 # Keybase
 if [[ ! -f /usr/bin/keybase ]]; then
