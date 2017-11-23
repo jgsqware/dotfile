@@ -11,8 +11,31 @@ DOTFILE=${HOME}/.config/dotfile
 sudo pacman-key --refresh-keys
 # Git
 i git
+
+# Keybase
+if [[ -z /usr/bin/keybase ]]; then
+    y keybase-bin
+fi
+run_keybase
+
+echo "Connect to keybase"
+read -p "Press any key to continue... " -n1 -s
+
+if [[ -z ${HOME}/.config/kb_dotfile ]]; then
+    git clone keybase://private/jgsqware/dotfile ${HOME}/.config/kb_dotfile
+else
+    git --git-dir=$HOME/.config/kb_dotfile/.git --work-tree=$HOME/.config/kb_dotfile pull -r
+fi
+
+sudo cp -ar ${HOME}/.config/kb_dotfile/ssh/. ~/.ssh/
+chmod 400 ~/.ssh/id_rsa
+gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
+gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
+gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
+
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
+git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
 
 
 
@@ -78,26 +101,7 @@ fi
 sudo pip install mdv
 
 
-# Keybase
-if [[ -z /usr/bin/keybase ]]; then
-    y keybase-bin
-fi
-run_keybase
 
-echo "Connect to keybase"
-read -p "Press any key to continue... " -n1 -s
-
-if [[ -z ${HOME}/.config/kb_dotfile ]]; then
-    git clone keybase://private/jgsqware/dotfile ${HOME}/.config/kb_dotfile
-else
-    git --git-dir=$HOME/.config/kb_dotfile/.git --work-tree=$HOME/.config/kb_dotfile pull -r
-fi
-
-sudo cp -ar ${HOME}/.config/kb_dotfile/ssh/. ~/.ssh/
-chmod 400 ~/.ssh/id_rsa
-gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
-gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
-gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 
 # Docker
 
