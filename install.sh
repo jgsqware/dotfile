@@ -8,7 +8,8 @@ function y() {
 }
 DOTFILE=${HOME}/.config/dotfile
 
-sudo pacman-key --refresh-keys
+#sudo pacman-key --refresh-keys
+i yaourt
 # Git
 i git
 
