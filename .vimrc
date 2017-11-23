@@ -4,9 +4,12 @@ if has('nvim')
     set termguicolors
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
     set inccommand=nosplit " Live substitution"
+    set background=dark
+    set t_Co=256
 endif
 
 "General
+set mouse=a
 set hidden "hide unsaved file instead of closing it. :ls to see it"
 set nobackup                 " Don't create annoying backup files
 set noerrorbells             " No beeps
@@ -20,7 +23,8 @@ set modeline
 autocmd FileType help wincmd H " open help vertically
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 set autowrite
-colorscheme codedark
+"colorscheme base16-oceanicnext
+colorscheme  codedark
 "set background=light
 "colorscheme PaperColor
 
@@ -82,14 +86,14 @@ else
 endif
 
 " syntastic 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 " fzf
 nnoremap <c-p> :FZF!<CR>
@@ -199,14 +203,11 @@ let g:go_highlight_build_constraints = 1
 "Plugins
 call plug#begin()
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
-"Plug 'SirVer/ultisnips'
-"`Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline'
-"Plug 'jiangmiao/auto-pairs'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'ErichDonGubler/nerdtree-plugin-open-in-file-browser' | Plug 'ErichDonGubler/vim-file-browser-integration'
 Plug 'tpope/vim-surround'

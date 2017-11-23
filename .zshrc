@@ -2,8 +2,8 @@ export ZSH=/usr/share/oh-my-zsh
 ZSH_THEME="miloshadzic"
 
 ZSH_TMUX_AUTOSTART=true
-source $ZSH/oh-my-zsh.sh
 plugins=(git docker docker-compose go tmux aws)
+source $ZSH/oh-my-zsh.sh
 
 # Environment Variable
 export XDG_CONFIG_HOME="${HOME}/.config"
