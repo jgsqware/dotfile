@@ -55,6 +55,7 @@ i neovim \
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ln -fs ${DOTFILE}/.vimrc ${HOME}/.vimrc
+ln -fs ~/.local/share/nvim/ ${HOME}/.config/nvim/
 ln -fs ${DOTFILE}/.vimrc ${HOME}/.config/nvim/init.vim
 mkdir -p ${HOME}/.config/nvim/colors
 ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
