@@ -58,7 +58,11 @@ gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-private-keys.asc
 gpg --import ${HOME}/.config/kb_dotfile/gpg/gpg-public-keys.asc
 gpg --import-ownertrust ${HOME}/.config/kb_dotfile/gpg/otrust.txt
 
-git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
+if [[ ! -d ${HOME}/.config/dotfile ]]; then
+    git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
+else
+    git --git-dir=$HOME/.config/dotfile/.git --work-tree=$HOME/.config/dotfile pull -r
+fi
 ln -sf ${DOTFILE}/.gitconfig ~/.gitconfig
 ln -sf ${DOTFILE}/.gitignore_global ~/.gitignore_global
 
