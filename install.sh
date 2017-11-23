@@ -7,6 +7,7 @@ function y() {
     yaourt -S --noconfirm "$@"
 }
 DOTFILE=${HOME}/.config/dotfile
+export XDG_CONFIG_HOME="${HOME}/.config"
 
 #sudo pacman-key --refresh-keys
 # Git
@@ -78,8 +79,6 @@ ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
 if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
-
-source ${HOME}/.zshrc
 
 # fzf
 i fzf \
