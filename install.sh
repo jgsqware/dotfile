@@ -26,6 +26,10 @@ if [[ ! -f /usr/bin/yaourt ]]; then
     sudo rm -dR yaourt/ package-query/
 fi
 
+if [[ ! -f /usr/bin/enpass ]]; then
+    y  enpass-bin
+fi
+
 # Keybase
 if [[ ! -f /usr/bin/keybase ]]; then
     y keybase-bin
@@ -108,9 +112,7 @@ nvim -c "GoInstallBinaries"
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 
 # Software
-if [[ ! -f /usr/bin/enpass ]]; then
-    y  enpass-bin
-fi
+
 
 sudo pip install mdv
 
