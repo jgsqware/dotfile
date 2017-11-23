@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash 
+set -euo pipefail
 
 function i() {
     sudo pacman -S --noconfirm "$@"
@@ -11,7 +12,8 @@ DOTFILE=${HOME}/.config/dotfile
 #sudo pacman-key --refresh-keys
 # Git
 i git \
-    openssh
+    openssh \
+    cmake
 
 # yaourt
 if [[ ! -f /usr/bin/yaourt ]]; then
@@ -92,8 +94,7 @@ ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
 
 # Python
 
-i python2 \ 
-    python-pip \
+i python2 \
     python2-pip
 
 # Neovim
