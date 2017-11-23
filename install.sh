@@ -33,7 +33,7 @@ run_keybase
 echo "Connect to keybase"
 read -p "Press any key to continue... " -n1 -s
 
-if [[ -z ${HOME}/.config/kb_dotfile ]]; then
+if [[ ! -d ${HOME}/.config/kb_dotfile ]]; then
     git clone keybase://private/jgsqware/dotfile ${HOME}/.config/kb_dotfile
 else
     git --git-dir=$HOME/.config/kb_dotfile/.git --work-tree=$HOME/.config/kb_dotfile pull -r
@@ -59,7 +59,7 @@ mkdir -p ${HOME}/.config/termite
 ln -fs ${DOTFILE}/termite.config ${HOME}/.config/termite/config
 ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
 
-if [[ -z /usr/share/oh-my-zsh ]]; then
+if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
 
