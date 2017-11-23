@@ -34,9 +34,7 @@ if [[ ! -f /usr/bin/yaourt ]]; then
     sudo rm -dR yaourt/ package-query/
 fi
 
-# Firefox
-
-i firefox
+i opera
 
 if [[ ! -f /usr/bin/enpass ]]; then
     y  enpass-bin
