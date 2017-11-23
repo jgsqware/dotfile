@@ -10,7 +10,7 @@ function y() {
 DOTFILE=${HOME}/.config/dotfile
 export XDG_CONFIG_HOME="${HOME}/.config"
 
-#sudo pacman-key --refresh-keys
+sudo pacman-key --refresh-keys
 # Git
 i git \
     openssh \
