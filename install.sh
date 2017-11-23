@@ -11,7 +11,7 @@ DOTFILE=${HOME}/.config/dotfile
 #sudo pacman-key --refresh-keys
 # Git
 i git \
-    ssh
+    openssh
 
 # yaourt
 if [[ ! -f /usr/bin/yaourt ]]; then
