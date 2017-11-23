@@ -1,4 +1,5 @@
-#!/bin/zsh 
+#!/bin/bash
+set -euo pipefail
 
 function i() {
     sudo pacman -S --noconfirm "$@"
