@@ -9,9 +9,20 @@ function y() {
 DOTFILE=${HOME}/.config/dotfile
 
 #sudo pacman-key --refresh-keys
-i yaourt
 # Git
 i git
+
+# yaourt
+sudo pacman -S --needed base-devel git wget yajl
+git clone https://aur.archlinux.org/package-query.git
+cd package-query/
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt/
+makepkg -si
+cd ..
+sudo rm -dR yaourt/ package-query/
 
 # Keybase
 if [[ ! -f /usr/bin/keybase ]]; then
