@@ -98,7 +98,8 @@ ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
 # Python
 
 i python2 \
-    python2-pip
+    python2-pip \
+    python-pip
 
 # Neovim
 
