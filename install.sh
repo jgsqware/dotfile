@@ -125,7 +125,7 @@ ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 # Software
 
 
-sudo pip install mdv
+sudo pip install mdv --user
 
 
 
