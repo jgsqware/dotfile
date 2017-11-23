@@ -125,10 +125,8 @@ ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 # Software
 
 
-sudo pip install mdv --user
-
-
-
+sudo pip install --user mdv \
+	aws-cli
 
 # Docker
 
