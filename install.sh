@@ -13,10 +13,10 @@ KB_DOTFILE=${HOME}/.config/kb_dotfile
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 function p(){
-    pip install "$1" --user
+    pip install "$1" --user --upgrade
 }
 
-# sudo pacman-key --refresh-keys
+sudo pacman-key --refresh-keys
 # Git
 i git \
     openssh \
@@ -142,7 +142,7 @@ ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 # Software
 
 p mdv \
-    awscli \
+    yq \
     p7zip
 
 y xreader \
@@ -158,8 +158,15 @@ i jq \
     dnsutils \
     spotify \
     xdg-utils \
-    libu2f-host
-    
+    libu2f-host \
+    terraform
+
+# AWS cli
+
+p awscli
+mkdir ~/.aws
+ln -s ${KB_DOTFILE}/aws.config ~/.aws/config
+ln -s ${KB_DOTFILE}/aws.credentials ~/.aws/credentials
 
 # Thunar
 
