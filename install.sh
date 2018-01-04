@@ -41,7 +41,7 @@ fi
 i opera \
     mplayer
 
-wget https://repo.herecura.eu/herecura/x86_64/opera-ffmpeg-codecs-62.0.3202.89-1-x86_64.pkg.tar.xz -O codecs.tar.xz
+wget https://repo.herecura.eu/herecura/x86_64/opera-beta-ffmpeg-codecs-63.0.3239.84-1-x86_64.pkg.tar.xz -O codecs.tar.xz
 tar xf codecs.tar.xz
 sudo mkdir /usr/lib64/opera/lib_extra
 sudo mv ./usr/lib/opera/lib_extra/libffmpeg.so /usr/lib64/opera/lib_extra/libffmpeg.so
