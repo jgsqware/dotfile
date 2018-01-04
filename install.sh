@@ -27,18 +27,18 @@ if [[ ! -f /usr/bin/yaourt ]]; then
     sudo pacman -S --needed base-devel git wget yajl
     git clone https://aur.archlinux.org/package-query.git
     cd package-query/
-    makepkg -si
+    makepkg -si --noconfirm
     cd ..
     git clone https://aur.archlinux.org/yaourt.git
     cd yaourt/
-    makepkg -si
+    makepkg -si --noconfirm
     cd ..
     sudo rm -dR yaourt/ package-query/
 fi
 
 # Opera
 
-i opera \ 
+i opera \
     mplayer
 
 wget https://repo.herecura.eu/herecura/x86_64/opera-ffmpeg-codecs-62.0.3202.89-1-x86_64.pkg.tar.xz -O codecs.tar.xz
