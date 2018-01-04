@@ -1,7 +1,7 @@
 # ~/.tmuxinator/aws-operator.yml
 
 name: aws-operator
-root: ~/workspace/go/src/github.com/giantswarm/aws-operator
+root: ~/go/src/github.com/giantswarm/aws-operator
 
 # Optional tmux socket
 # socket_name: foo

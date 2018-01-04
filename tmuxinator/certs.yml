@@ -1,7 +1,7 @@
-# ~/.tmuxinator/desktop.yml
+# ~/.tmuxinator/certs.yml
 
-name: desktop
-root: ~/
+name: certs
+root: ~/go/src/github.com/giantswarm/certs
 
 # Optional tmux socket
 # socket_name: foo
@@ -40,7 +40,8 @@ root: ~/
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t desktop
+# post: tmux -CC attach -t certs
 
 windows:
-  - shell: 
+  - nvim: nvim
+  - term: 

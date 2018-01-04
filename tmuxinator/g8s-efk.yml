@@ -1,7 +1,7 @@
-# ~/.tmuxinator/desktop.yml
+# ~/.tmuxinator/g8s-efk.yml
 
-name: desktop
-root: ~/
+name: g8s-efk
+root: ~/go/src/github.com/giantswarm/g8s-efk
 
 # Optional tmux socket
 # socket_name: foo
@@ -40,7 +40,8 @@ root: ~/
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t desktop
+# post: tmux -CC attach -t g8s-efk
 
 windows:
-  - shell: 
+  - nvim: nvim
+  - term: 

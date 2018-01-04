@@ -1,7 +1,7 @@
-# ~/.tmuxinator/desktop.yml
+# ~/.tmuxinator/gsctl.yml
 
-name: desktop
-root: ~/
+name: gsctl
+root: ~/go/src/github.com/giantswarm/gsctl
 
 # Optional tmux socket
 # socket_name: foo
@@ -40,7 +40,8 @@ root: ~/
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t desktop
+# post: tmux -CC attach -t gsctl
 
 windows:
-  - shell: 
+  - nvim: nvim
+  - term: 

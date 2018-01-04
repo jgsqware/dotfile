@@ -15,14 +15,15 @@ set nobackup                 " Don't create annoying backup files
 set noerrorbells             " No beeps
 set nojoinspaces             " No double space after a dot
 set noswapfile               " Don't use swapfile
-set nosplitright             " Split vertical windows left bo the current windows
 set spellcapcheck=''         " Allow sentences starting with lower letter
-set splitbelow               " Split horizontal windows below to the current windows
 set matchtime=0
 set modeline
 autocmd FileType help wincmd H " open help vertically
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 set autowrite
+:au FocusLost * :w
+set laststatus=2
+set updatetime=100
 "colorscheme base16-oceanicnext
 colorscheme  codedark
 "set background=light
@@ -68,8 +69,19 @@ inoremap <C-e> <Esc>A
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 nnoremap <leader>w :bd<CR>
-nnoremap <leader>c :lclose<CR>
+nnoremap <leader>c :close<CR>
+nnoremap <leader>s :pclose<CR>
+nnoremap <M-b> :bprevious<CR>
+nnoremap <M-n> :bnext<CR>
+vnoremap p "_dP
 
+iab <expr> nlog strftime("---\n\n%H:%M:%S")
+iab <expr> ndate strftime("%H:%M:%S")
+iab <expr> nstart strftime("%H:%M:%S - START")
+iab <expr> nafk strftime("%H:%M:%S - AFK")
+iab <expr> nback strftime("%H:%M:%S - BACK")
+iab <expr> nend strftime("%H:%M:%S - END")
+iab <expr> ntask "- [ ]"
 " Tmux navigator
 let g:tmux_navigator_no_mappings = 1
 if !empty($TMUX)
@@ -85,39 +97,32 @@ else
     nnoremap <silent> <M-l> <C-w>l
 endif
 
-" syntastic 
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
 
 " fzf
 nnoremap <c-p> :FZF!<CR>
 
 " tagbar
-nmap <F3> :TagbarToggle<CR>
+nmap <M-t> :TagbarToggle<CR>
 let g:tagbar_sort = 0
 
 " vim-go
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go']  }
-
 let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
 
 augroup vimgo
     autocmd!
 
-    autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
-    autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc)
-    autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
+    autocmd FileType go nmap <leader>l  <Plug>(go-build)
+    autocmd FileType go nmap <leader>r  <Plug>(go-run)
+    autocmd FileType go nmap <leader>t  <Plug>(go-run)
 
     autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
-    autocmd BufWritePost *.go :SyntasticCheck
+    let g:go_list_type = "quickfix"
+    map <C-n> :cnext<CR>
+    map <C-m> :cprevious<CR>
+    nnoremap <leader>q :cclose<CR>
+
 augroup END
 
 let g:tagbar_type_go = {
@@ -151,9 +156,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "nnoremap <leader>o :exe ':silent !opera %'<CR>
 "
 ""Go command
-"map <C-n> :cnext<CR>
-"map <C-m> :cprevious<CR>
-"nnoremap <leader>q :cclose<CR>
 "autocmd FileType go nmap <leader>r  <Plug>(go-run)
 "autocmd FileType go nmap <leader>t  <Plug>(go-test)
 "let g:go_fmt_command = "goimports"
@@ -174,7 +176,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "autocmd FileType go nmap <leader>s  <Plug>(go-def-vertical)
 "autocmd FileType go nmap <leader>f :GoInfo<CR>
 "autocmd FileType go nmap <leader>g :GoDeclsDir<CR>
-"let g:go_auto_type_info = 1
 "let g:go_auto_sameids = 1
 "
 "
@@ -203,6 +204,7 @@ let g:go_highlight_build_constraints = 1
 "Plugins
 call plug#begin()
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
+Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -213,7 +215,7 @@ Plug 'ErichDonGubler/nerdtree-plugin-open-in-file-browser' | Plug 'ErichDonGuble
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-syntastic/syntastic'
 Plug 'majutsushi/tagbar'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'airblade/vim-gitgutter'
 call plug#end()

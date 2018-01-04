@@ -5,6 +5,7 @@ ZSH_TMUX_AUTOSTART=true
 plugins=(git docker docker-compose go tmux aws)
 source $ZSH/oh-my-zsh.sh
 
+
 # Environment Variable
 export XDG_CONFIG_HOME="${HOME}/.config"
 export DOTFILE="${HOME}/.config/dotfile"
@@ -26,11 +27,11 @@ export PATH="$HOME/.rvm/bin:$PATH"
 
 
 # Aliases
-for file in ${DOTFILE}/aliases/**/*(.); do
+for file in ${KB_DOTFILE}/aliases/**/*(.); do
     source "$file"
 done
 
-for file in ${KB_DOTFILE}/aliases/**/*(.); do
+for file in ${DOTFILE}/aliases/**/*(.); do
     source "$file"
 done
 
@@ -48,3 +49,5 @@ source /usr/share/fzf/completion.zsh
 source <(helm completion zsh)
 source  ${DOTFILE}/completions/tmuxinator.zsh
 source <(kubectl completion zsh)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

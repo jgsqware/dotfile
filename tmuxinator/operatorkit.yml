@@ -1,7 +1,7 @@
-# ~/.tmuxinator/desktop.yml
+# ~/.tmuxinator/operatorkit.yml
 
-name: desktop
-root: ~/
+name: operatorkit
+root: ~/go/src/github.com/giantswarm/operatorkit
 
 # Optional tmux socket
 # socket_name: foo
@@ -40,7 +40,8 @@ root: ~/
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t desktop
+# post: tmux -CC attach -t operatorkit
 
 windows:
-  - shell: 
+  - nvim: nvim
+  - term: 
