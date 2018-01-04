@@ -38,7 +38,7 @@ fi
 
 # Opera
 
-i opera\ 
+i opera \ 
     mplayer
 
 wget https://repo.herecura.eu/herecura/x86_64/opera-ffmpeg-codecs-62.0.3202.89-1-x86_64.pkg.tar.xz -O codecs.tar.xz
