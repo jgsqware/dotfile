@@ -43,8 +43,8 @@ i opera \
 
 wget https://repo.herecura.eu/herecura/x86_64/opera-beta-ffmpeg-codecs-63.0.3239.84-1-x86_64.pkg.tar.xz -O codecs.tar.xz
 tar xf codecs.tar.xz
-sudo mkdir /usr/lib64/opera/lib_extra
-sudo mv ./usr/lib/opera/lib_extra/libffmpeg.so /usr/lib64/opera/lib_extra/libffmpeg.so
+sudo mkdir -p /usr/lib64/opera/lib_extra
+sudo mv ./usr/lib/opera_beta/lib-extra/libffmpeg.so /usr/lib64/opera/lib_extra/libffmpeg.so
 
 if [[ ! -f /usr/bin/enpass ]]; then
     y  enpass-bin
@@ -193,6 +193,11 @@ fi
 if [[ ! -f /usr/bin/kubectl ]]; then
     y kubectl-bin
 fi
+
+sudo wget -O /usr/bin/kubectx https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx && sudo chmod +x /usr/bin/kubectx
+sudo wget -O /usr/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens && sudo chmod +x /usr/bin/kubens
+sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubectx/master/utils.bash && sudo chmod +x /usr/bin/utils.bash
+
 
 # bspwm
 

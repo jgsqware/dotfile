@@ -17,7 +17,7 @@ export EDITOR=nvim
 export CDPATH=".:$GOPATH/src/github.com/giantswarm"
 
 # Common
-export PATH="$PATH/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/.local/bin"
+export PATH="$PATH/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/.local/bin:${DOTFILE}/bin"
 # Go
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Python
@@ -48,6 +48,8 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 source <(helm completion zsh)
 source  ${DOTFILE}/completions/tmuxinator.zsh
+#source  ${DOTFILE}/completions/kubectx.zsh
+#source  ${DOTFILE}/completions/kubens.zsh
 source <(kubectl completion zsh)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

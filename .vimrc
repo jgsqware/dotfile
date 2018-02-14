@@ -178,8 +178,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "autocmd FileType go nmap <leader>g :GoDeclsDir<CR>
 "let g:go_auto_sameids = 1
 "
-"
-""ultisnips
+
+"YouCompleteMe
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+"ultisnips
+let g:UltiSnipsExpandTrigger = '<Tab>'
 "let g:UltiSnipsExpandTrigger = "<nop>"
 "let g:ulti_expand_or_jump_res = 0
 "function! ExpandSnippetOrCarriageReturn()
@@ -199,7 +203,14 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+"Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
+"vim-markdown
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_folding_disabled = 1
+set conceallevel=2
 
 "Plugins
 call plug#begin()
@@ -218,4 +229,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
