@@ -13,7 +13,7 @@ background = #222222
 foreground = #ccfafafa
 linecolor = #666
 
-border-bottom = 2
+border-bottom-size = 2
 border-bottom-color = #333333
 
 spacing = 1
@@ -28,10 +28,11 @@ font-1 = "Wuncon Siji:pixelsize=10;0"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=9;1"
 font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=9;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=9;1"
+font-5 = "DejaVu Sans:pixelsize=9;1"
 
 modules-left = spotify
 modules-center = bspwm
-modules-right = volume wifi wired battery memory cpu date xkeyboard power-menu
+modules-right = backlight pulseaudio wifi wired battery memory cpu date xkeyboard power-menu
 
 [module/bspwm]
 type = internal/bspwm
@@ -44,9 +45,9 @@ format = <label-state> <label-mode>
 #ws-icon-default =  
 
 
-label-active = %index%
-label-active-background = #3f3f3f
-label-active-padding = 2
+label-focused = %index%
+label-focused-foreground = #fba922
+label-focused-padding = 2
 
 label-occupied = %index%
 label-occupied-padding = 2
@@ -83,18 +84,12 @@ label = %{F#666}%{F#ccfafafa} %percentage_used%%
 
 [module/wired]
 type = internal/network
-interface = enp0s25
+interface = enp60s0u2u1 
 interval = 3.0
 
 format-connected-prefix = " "
 format-connected-prefix-foreground = #666
 label-connected = %local_ip%
-
-;format-disconnected = <label-disconnected>
-;format-disconnected-prefix = " "
-;format-disconnected-prefix-foreground = #666
-;label-disconnected = not connected
-;label-disconnected-foreground = #999
 
 [module/wifi]
 type = internal/network
@@ -103,7 +98,6 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid% %{F#66}%local_ip%
-;label-disconnected = %{F#666}%{F#ccfafafa} not connected
 label-disconnected-foreground = #66
 
 ramp-signal-0 = 
@@ -116,18 +110,15 @@ ramp-signal-foreground = #666
 
 [module/date]
 type = internal/date
-date = %%{T3}%%{F#666}%{F#ccfafafa} %Y-%m-%d %%{F#fba922}  %H:%M {F#ccfafafa}  %%{T-}
+date = %%{T3}%%{F#666}%{F#ccfafafa} %Y-%m-%d %%{F#fba922}  %H:%M 
 interval = 5
 
-[module/volume]
-type = internal/volume
-speaker-mixer = Speaker
-headphone-mixer = Headphone
-headphone-id = 9
+[module/pulseaudio]
+type = internal/pulseaudio
 
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage%%
-label-volume-foreground = ${BAR.foreground}
+label-volume-foreground = ${root.foreground}
 
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -195,10 +186,25 @@ menu-0-3-exec = $HOME/.config/bspwm/lock
 menu-1-0 = Cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = Reboot
-menu-1-1-exec = sudo reboot
+menu-1-1-exec = systemctl reboot
 
 menu-2-0 = Power off
-menu-2-0-exec = sudo poweroff
+menu-2-0-exec = systemctl poweroff
 menu-2-1 = Cancel
 menu-2-1-exec = menu-open-0
+
+[module/backlight]
+type = internal/xbacklight
+output =${env:MONITOR:eDP1} 
+
+enable-scroll = false
+format =  %{F#666}<ramp>%{F#ccfafafa} <label> 
+label = %percentage%%
+
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
 ; vim:ft=dosini

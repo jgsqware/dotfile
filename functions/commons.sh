@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# Alias
+alias pi="sudo pacman -Syu"
+
 # FZF
 
 function fe() {

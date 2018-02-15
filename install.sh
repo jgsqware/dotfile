@@ -41,11 +41,6 @@ fi
 i opera \
     mplayer
 
-wget https://repo.herecura.eu/herecura/x86_64/opera-beta-ffmpeg-codecs-63.0.3239.84-1-x86_64.pkg.tar.xz -O codecs.tar.xz
-tar xf codecs.tar.xz
-sudo mkdir -p /usr/lib64/opera/lib_extra
-sudo mv ./usr/lib/opera_beta/lib-extra/libffmpeg.so /usr/lib64/opera/lib_extra/libffmpeg.so
-
 if [[ ! -f /usr/bin/enpass ]]; then
     y  enpass-bin
 fi
@@ -66,7 +61,7 @@ else
 fi
 
 rm -rf ${HOME}/.ssh
-ln -fs ${KB_DOTFILE}/ssh/ ${HOME}/.ssh/
+ln -fs ${KB_DOTFILE}/ssh/ ${HOME}/.ssh
 chmod 400 ${HOME}/.ssh/id_rsa
 gpg --import ${KB_DOTFILE}/gpg/gpg-private-keys.asc
 gpg --import ${KB_DOTFILE}/gpg/gpg-public-keys.asc
@@ -103,10 +98,6 @@ i tmux \
     xclip 
 
 ln -fs ${DOTFILE}/.tmux.conf ${HOME}/.tmux.conf
-if [[ ! -f /usr/bin/tmuxinator ]]; then
-    y  tmuxinator
-fi
-ln -fs ${DOTFILE}/tmuxinator ${HOME}/.config/tmuxinator
 git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 
 # Python
@@ -126,7 +117,7 @@ y universal-ctags-git
 curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ln -fs ${DOTFILE}/.vimrc ${HOME}/.vimrc
-ln -fs ${HOME}/.local/share/nvim/ ${HOME}/.config/nvim/
+ln -fs ${HOME}/.local/share/nvim/ ${HOME}/.config/nvim
 ln -fs ${DOTFILE}/.vimrc ${HOME}/.config/nvim/init.vim
 mkdir -p ${HOME}/.config/nvim/colors
 ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
@@ -156,10 +147,11 @@ i jq \
     rofi \
     playerctl \
     dnsutils \
-    spotify \
     xdg-utils \
     libu2f-host \
     terraform
+
+y spotify
 
 # AWS cli
 
@@ -201,26 +193,28 @@ sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubect
 
 # bspwm
 
-if $(sudo pacman -Q | grep -q bspwm); then
-    ln -fs ${DOTFILE}/bspwm ${HOME}/.config/bspwm
-    ln -fs ${DOTFILE}/sxhkd ${HOME}/.config/sxhkd
+ln -fs ${DOTFILE}/bspwm ${HOME}/.config/bspwm
+ln -fs ${DOTFILE}/sxhkd ${HOME}/.config/sxhkd
 
-    y polybar \
-        envypn-font \
-        siji-git 
-    ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
-    
-    i ttf-font-awesome \
-	i3lock
-fi
+y polybar-git \
+    envypn-font \
+    siji-git 
+ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
 
-# plexmediaserver
+i ttf-font-awesome \
+	i3lock \
+        feh \
+        gucharmap
 
-y plex-media-server
+i libnotify \
+        xfce4-notifyd
+
+i xbindkeys
+ln -s $DOTFILE/.xbindkeysrc ${HOME}/.xbindkeysrc
 
 # visual studio code
 
-y visual-studio-code
+y code
 
 # gdrive 
 if [[ ! -f /usr/bin/drive ]]; then
@@ -233,12 +227,11 @@ fi
 
 # VirtualBox
 
-i virtualbox \
-    virtualbox-host-modules-arch \
-    linux-headers \ 
-    linux-lts
+i virtualbox virtualbox-host-modules-arch linux-headers linux-lts
 
 # OpenVPN
 i openvpn
 sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh
 chmod +x /etc/openvpn/update-resolv-conf.sh
+sudo ln -s $DOTFILE/bin/99-disable-wireless-when-wired /etc/NetworkManager/dispatcher.d/99-disable-wireless-when-wired
+
