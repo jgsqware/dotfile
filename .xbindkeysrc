@@ -70,5 +70,10 @@
     m:0x0 + c:246
     XF86WLAN 
 
+#Play/PauseSpotify
+"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+    m:0x0 + c:179
+    XF86Tools 
+
 #
 # End of xbindkeys configuration

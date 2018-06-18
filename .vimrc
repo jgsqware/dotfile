@@ -76,7 +76,8 @@ nnoremap <M-n> :bnext<CR>
 vnoremap p "_dP
 
 iab <expr> nlog strftime("---\n\n%H:%M:%S")
-iab <expr> ndate strftime("%H:%M:%S")
+iab <expr> ndate strftime("%d/%m/%y")
+iab <expr> ntime strftime("%H:%M:%S")
 iab <expr> nstart strftime("%H:%M:%S - START")
 iab <expr> nafk strftime("%H:%M:%S - AFK")
 iab <expr> nback strftime("%H:%M:%S - BACK")

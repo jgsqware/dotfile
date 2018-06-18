@@ -8,8 +8,11 @@ ssh-add "${HOME}/.ssh/id_rsa"
 
 sxhkd &
 
-bspc monitor eDP1 -d term web music IV V 
-bspc monitor DP2 -d term web VIII IX X
+PRIMARY=$(xrandr --query | grep '\bconnected\b' | grep primary | awk '{print $1}')
+SECONDARY=$(xrandr --query | grep '\bconnected\b' | grep -v primary | awk '{print $1}')
+
+bspc monitor ${PRIMARY} -d term web music IV V 
+bspc monitor ${SECONDARY} -d term web VIII IX X
 
 bspc config border_width         2
 bspc config window_gap          12
@@ -19,9 +22,10 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config click_to_focus       true
 #bspc config external_rules_command "$(which external_rules)"
+bspc rule -a Gimp follow=on state=floating
 
-xrandr --output eDP2 --auto --output DP2 --auto --right-of eDP2
-MONITOR=DP2 polybar -c ~/.config/polybar/ethernet top &
-MONITOR=eDP1 polybar -c ~/.config/polybar/ethernet top &
+xrandr --output ${PRIMARY} --auto --output ${SECONDARY} --auto --right-of ${PRIMARY}
+MONITOR=${PRIMARY} polybar -c ~/.config/polybar/ethernet top &
+MONITOR=${SECONDARY} polybar -c ~/.config/polybar/ethernet top &
 feh --bg-fill ~/.config/dotfile/background.jpg
 

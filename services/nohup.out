@@ -1,0 +1,122 @@
+[0m[01mMkchromecast [0mv0.3.8.1
+Creating Pulseaudio Sink...
+[0m[33mOpen Pavucontrol and Select the Mkchromecast Sink.[0m
+[0m[01m[34mStarting Local Streaming Server[0m
+[0m[32m[Done][0m
+[0m[04mSelected backend:[0m parec
+[0m[04mSelected audio codec:[0m mp3
+[0m[04mDefault bitrate used:[0m 192k
+[0m[04mDefault sample rate used:[0m 44100Hz.
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+[0m[04mPID of main process:[0m 5923
+[0m[04mPID of streaming process:[0m 5930
+Traceback (most recent call last):
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 113, in _get_chromecasts
+    return list(pychromecast.get_chromecasts_as_dict().keys())
+AttributeError: module 'pychromecast' has no attribute 'get_chromecasts_as_dict'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/bin/mkchromecast", line 283, in <module>
+    mk()
+  File "/usr/bin/mkchromecast", line 53, in __init__
+    self.audio_linux()
+  File "/usr/bin/mkchromecast", line 72, in audio_linux
+    self.cc.initialize_cast()
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 135, in initialize_cast
+    self.cclist = self._get_chromecasts()
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 117, in _get_chromecasts
+    tries=self.tries)}
+  File "/usr/lib/python3.6/site-packages/pychromecast/__init__.py", line 74, in get_chromecasts
+    hosts = discover_chromecasts()
+  File "/usr/lib/python3.6/site-packages/pychromecast/discovery.py", line 114, in discover_chromecasts
+    stop_discovery(browser)
+  File "/usr/lib/python3.6/site-packages/pychromecast/discovery.py", line 93, in stop_discovery
+    browser.zc.close()
+  File "/usr/lib/python3.6/site-packages/zeroconf.py", line 2066, in close
+    self.engine.join()
+  File "/usr/lib/python3.6/threading.py", line 1056, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.6/threading.py", line 1072, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+[0m[01mMkchromecast [0mv0.3.8.1
+Creating Pulseaudio Sink...
+[0m[33mOpen Pavucontrol and Select the Mkchromecast Sink.[0m
+[0m[01m[34mStarting Local Streaming Server[0m
+[0m[32m[Done][0m
+[0m[04mSelected backend:[0m parec
+[0m[04mSelected audio codec:[0m mp3
+[0m[04mDefault bitrate used:[0m 192k
+[0m[04mDefault sample rate used:[0m 44100Hz.
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+192.168.1.104 - - [23/Apr/2018 21:06:45] "GET /stream HTTP/1.1" 200 -
+[0m[04mPID of main process:[0m 6155
+[0m[04mPID of streaming process:[0m 6183
+[0m[01mMkchromecast [0mv0.3.8.1
+Creating Pulseaudio Sink...
+[0m[33mOpen Pavucontrol and Select the Mkchromecast Sink.[0m
+[0m[01m[34mStarting Local Streaming Server[0m
+[0m[32m[Done][0m
+[0m[04mSelected backend:[0m parec
+[0m[04mSelected audio codec:[0m mp3
+[0m[04mDefault bitrate used:[0m 192k
+[0m[04mDefault sample rate used:[0m 44100Hz.
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+[0m[04mPID of main process:[0m 6608
+[0m[04mPID of streaming process:[0m 6637
+Traceback (most recent call last):
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 113, in _get_chromecasts
+    return list(pychromecast.get_chromecasts_as_dict().keys())
+AttributeError: module 'pychromecast' has no attribute 'get_chromecasts_as_dict'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/pychromecast/discovery.py", line 110, in discover_chromecasts
+    discover_complete.wait(timeout)
+  File "/usr/lib/python3.6/threading.py", line 551, in wait
+    signaled = self._cond.wait(timeout)
+  File "/usr/lib/python3.6/threading.py", line 299, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/bin/mkchromecast", line 283, in <module>
+    mk()
+  File "/usr/bin/mkchromecast", line 53, in __init__
+    self.audio_linux()
+  File "/usr/bin/mkchromecast", line 72, in audio_linux
+    self.cc.initialize_cast()
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 135, in initialize_cast
+    self.cclist = self._get_chromecasts()
+  File "/usr/share/mkchromecast/mkchromecast/cast.py", line 117, in _get_chromecasts
+    tries=self.tries)}
+  File "/usr/lib/python3.6/site-packages/pychromecast/__init__.py", line 74, in get_chromecasts
+    hosts = discover_chromecasts()
+  File "/usr/lib/python3.6/site-packages/pychromecast/discovery.py", line 114, in discover_chromecasts
+    stop_discovery(browser)
+  File "/usr/lib/python3.6/site-packages/pychromecast/discovery.py", line 93, in stop_discovery
+    browser.zc.close()
+  File "/usr/lib/python3.6/site-packages/zeroconf.py", line 2066, in close
+    self.engine.join()
+  File "/usr/lib/python3.6/threading.py", line 1056, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.6/threading.py", line 1072, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+[0m[01mMkchromecast [0mv0.3.8.1
+Creating Pulseaudio Sink...
+[0m[33mOpen Pavucontrol and Select the Mkchromecast Sink.[0m
+[0m[01m[34mStarting Local Streaming Server[0m
+[0m[32m[Done][0m
+[0m[04mSelected backend:[0m parec
+[0m[04mSelected audio codec:[0m mp3
+[0m[04mDefault bitrate used:[0m 192k
+[0m[04mDefault sample rate used:[0m 44100Hz.
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+192.168.1.104 - - [23/Apr/2018 21:15:08] "GET /stream HTTP/1.1" 200 -
+write() failed: Broken pipe

@@ -1,10 +1,12 @@
 #!/bin/zsh
 
 alias vim="nvim"
+
+alias wifi="nmcli radio wifi"
 # Git aliases
 alias gvend="git add vendor  Gopkg.* && git commit -m 'update vendors'"
 alias ggvend="git add vendor glide.* && git commit -m 'update Glide vendors'"
-alias gh="xdg-open \`git remote -v | grep git@github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/:/\//' -e 's/git@/http:\/\//'\`"
+alias gh="xdg-open \`git remote -v | grep git@github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/:/\//' -e 's/git@/http:\/\//'\` &>/dev/null"
 alias sha_copy="git rev-parse HEAD | xclip -selection clipboard"
 alias sha="git rev-parse HEAD"
 alias gacsm="gaa && gcsm "
@@ -16,6 +18,7 @@ alias hg="history | grep -i"
 alias pg="ps aux | grep -i"
 alias render="xrandr --output DP-1 --mode 2560x1440 --panning 3840x2160+3840+1440 --scale 1.5x1.5 --right-of eDP-1 && xrandr --output DP-1 --mode 2560x1440 --panning 3840x2160+3840+0 --scale 1.5x1.5 --right-of eDP-1"
 alias mux="tmuxinator"
+alias pr="sudo pacman -Rs"
 
 # Docker
 alias docker-rmid="docker images --quiet --filter=dangling=true | xargs docker rmi -"
@@ -24,20 +27,34 @@ alias dkc="docker-compose"
 # Applications
 alias stream='mkchromecast --encoder-backend ffmpeg --alsa-device hw:0,1 --name Bureau -b 320 --control'
 alias agv='ag --ignore=vendor/'
+alias code="code-oss"
 # Go
 alias godocs='godoc -http=":6060"'
 alias guv="glide update -v"
 alias gbtv="go build && go test ./... && go vet"
 
 alias k="kubectl"
-alias g="kubectl -n giantswarm"
-#alias helm="docker run --rm -v ~/.ssh:/root/.ssh -v `pwd`:/data -w /data -v ~/.helm:/root/.helm -v ~/.kube:/root/.kube -v /home/jgsqware/.config/opsctl/:/home/jgsqware/.config/opsctl/ -v /home/jgsqware/.minikube:/home/jgsqware/.minikube lachlanevenson/k8s-helm:v2.6.1"
-alias hd="helm_2.6.2 del"
-alias hs="helm_2.6.2 status"
-alias hi="helm_2.6.2 install"
-alias hu="helm_2.6.2 upgrade"
+alias kns="kubens"
+alias kctx="kubectx"
+alias kb="kubectl run -ti busybox --image=yauritux/busybox-curl --rm -- sh"
+alias hd="helm del"
+alias hs="helm status"
+alias hi="helm install"
+alias hu="helm upgrade"
 
-alias openvpn="sudo openvpn --config $KB_DOTFILE/jgsqware.ovpn --script-security 2"
+function clone() {
+    git clone git@github.com:jgsqware/${1}.git ~/go/src/github.com/jgsqware/${1}
+}
+
+function kcns() {
+  local cur_ctx=$(kubectl config current-context)
+  ns="$(kubectl config view -o=jsonpath="{.contexts[?(@.name==\"${cur_ctx}\")].context.namespace}")"
+  if [[ -z "${ns}" ]]; then
+    echo "default"
+  else
+    echo "${ns}"
+  fi
+}
 
 function logwork() {
     if [[ ! -d ~/logwork/ ]]; then 
@@ -60,3 +77,5 @@ alias tips="nvim ~/logwork/tips.md"
 function stips() {
     ag "$1" ~/logwork/tips.md
 }
+
+alias notes="nvim ~/go/src/github.com/jgsqware/notes/$(date +%Y)/$(date +%m).md"

@@ -30,9 +30,31 @@ font-3 = "Font Awesome 5 Free:style=Solid:pixelsize=9;1"
 font-4 = "Font Awesome 5 Brands:pixelsize=9;1"
 font-5 = "DejaVu Sans:pixelsize=9;1"
 
-modules-left = spotify
-modules-center = bspwm
-modules-right = backlight pulseaudio wifi wired battery memory cpu date xkeyboard power-menu
+tray-position = right
+
+modules-left = i3 spotify
+modules-right = backlight pulseaudio cast wifi wired battery memory cpu date xkeyboard power-menu
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+#index-sort = true
+wrapping-scroll = true
+strip-wsnumbers = true
+pin-workspaces = true
+
+label-mode-padding = 5
+
+#label-unfocused-foreground = #44526C
+#label-unfocused-padding = 1
+#label-visible-foregroud = #44526C
+#label-visible-padding = 1
+#label-focused-foreground = #04142D
+#label-focused-padding = 1
+#label-urgent-padding = 1
 
 [module/bspwm]
 type = internal/bspwm
@@ -90,6 +112,7 @@ interval = 3.0
 format-connected-prefix = " "
 format-connected-prefix-foreground = #666
 label-connected = %local_ip%
+label-disconnected-foreground = #66
 
 [module/wifi]
 type = internal/network
@@ -97,7 +120,7 @@ interface = wlp4s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-label-connected = %essid% %{F#66}%local_ip%
+label-connected = %essid% 
 label-disconnected-foreground = #66
 
 ramp-signal-0 = 
@@ -159,6 +182,10 @@ animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-foreground = #666
 animation-charging-framerate = 750
+
+[module/cast]
+type = custom/text
+content = cast
 
 [module/spotify]
 type = custom/script

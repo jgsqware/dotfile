@@ -16,6 +16,15 @@ function p(){
     pip install "$1" --user --upgrade
 }
 
+function gi() {
+    if [[ ! -f "${HOME}/go/bin/${1}" ]]; then
+        git clone git@github.com:giantswarm/${1}.git ~/go/src/github.com/giantswarm/${1}
+        cd ~/go/src/github.com/giantswarm/${1}
+        go install
+        cd -
+    fi
+}
+
 sudo pacman-key --refresh-keys
 # Git
 i git \
@@ -89,6 +98,8 @@ if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
 
+ln -fs $DOTFILE/i3 ~/.config/i3
+
 # fzf
 i fzf \
     the_silver_searcher
@@ -149,7 +160,13 @@ i jq \
     dnsutils \
     xdg-utils \
     libu2f-host \
-    terraform
+    terraform \
+    httpie \
+    vlc \
+    tree \
+    dropbox \
+    xbindkeys
+
 
 y spotify
 
@@ -189,7 +206,7 @@ fi
 sudo wget -O /usr/bin/kubectx https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx && sudo chmod +x /usr/bin/kubectx
 sudo wget -O /usr/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens && sudo chmod +x /usr/bin/kubens
 sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubectx/master/utils.bash && sudo chmod +x /usr/bin/utils.bash
-
+y minikube
 
 # bspwm
 
@@ -227,7 +244,7 @@ fi
 
 # VirtualBox
 
-i virtualbox virtualbox-host-modules-arch linux-headers linux-lts
+i virtualbox virtualbox-host-dkms linux-headers linux-lts
 
 # OpenVPN
 i openvpn
@@ -235,3 +252,33 @@ sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.
 chmod +x /etc/openvpn/update-resolv-conf.sh
 sudo ln -s $DOTFILE/bin/99-disable-wireless-when-wired /etc/NetworkManager/dispatcher.d/99-disable-wireless-when-wired
 
+
+# giantswarm 
+gi gsctl
+gi opsctl
+ln -fs ${KB_DOTFILE}/gsctl ${HOME}/.config/gsctl
+
+
+#etcher
+i polkit lxqt-policykit
+y etcher
+
+#bluetooth
+i    pulseaudio-alsa \
+    pulseaudio-bluetooth \
+    bluez \
+    bluez-libs \
+    bluez-utils
+
+
+echo "VSCODE extension"
+echo "Code Outline"
+echo "gitignore"
+echo "Go"
+echo "Kubernetes"
+echo "Open in Github"
+echo "Path Intellisense"
+echo "Python"
+echo "VSCode Great Icons"
+echo "vscode-helm"
+echo "YAML support"

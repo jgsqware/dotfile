@@ -1,7 +1,7 @@
 export ZSH=/usr/share/oh-my-zsh
 ZSH_THEME="miloshadzic"
 
-ZSH_TMUX_AUTOSTART=true
+#ZSH_TMUX_AUTOSTART=true
 plugins=(git docker docker-compose go tmux aws)
 source $ZSH/oh-my-zsh.sh
 
@@ -14,7 +14,7 @@ export GOPATH="${HOME}/go"
 
 export LESS=' -R '
 export EDITOR=nvim
-export CDPATH=".:$GOPATH/src/github.com/giantswarm"
+export CDPATH=".:$GOPATH/src/github.com/giantswarm:$GOPATH/src/github.com/jgsqware:$GOPATH/src/github.com"
 
 # Common
 export PATH="$PATH/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/.local/bin:${DOTFILE}/bin"
