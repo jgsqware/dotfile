@@ -10,6 +10,7 @@ alias gh="xdg-open \`git remote -v | grep git@github.com | grep fetch | head -1 
 alias sha_copy="git rev-parse HEAD | xclip -selection clipboard"
 alias sha="git rev-parse HEAD"
 alias gacsm="gaa && gcsm "
+alias gpr="git pull -r"
 
 # Shell Aliases
 alias dotconfig="vim ${DOTFILE}"
@@ -37,6 +38,7 @@ alias k="kubectl"
 alias kns="kubens"
 alias kctx="kubectx"
 alias kb="kubectl run -ti busybox --image=yauritux/busybox-curl --rm -- sh"
+alias kmaster="kubectl get nodes -l node-role.kubernetes.io/master -o yaml | yq -r '.items[0].metadata.labels.ip'"
 alias hd="helm del"
 alias hs="helm status"
 alias hi="helm install"
