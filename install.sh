@@ -24,7 +24,7 @@ function gi() {
         cd -
     fi
 }
-
+if false; then
 sudo pacman-key --refresh-keys
 # Git
 i git \
@@ -97,9 +97,12 @@ ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
 if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
-
+chsh -s $(which zsh)
+fi
+i i3
 ln -fs $DOTFILE/i3 ~/.config/i3
-
+y xfce4-i3-workspaces-plugin-git
+exit
 # fzf
 i fzf \
     the_silver_searcher
@@ -148,12 +151,12 @@ p mdv \
     p7zip
 
 y xreader \
-    mkchromecast \
+    python2-zeroconf \
+    mkchromecast 
 
 i jq \
     rsync \
     transmission-gtk \
-    libreoffice-fresh \
     keepass \
     rofi \
     playerctl \
@@ -163,12 +166,10 @@ i jq \
     terraform \
     httpie \
     vlc \
-    tree \
-    dropbox \
-    xbindkeys
+    tree  
 
-
-y spotify
+y spotify \
+    dropbox
 
 # AWS cli
 
@@ -181,7 +182,9 @@ ln -s ${KB_DOTFILE}/aws.credentials ~/.aws/credentials
 
 i thunar \
     thunar-archive-plugin \
-    file-roller
+    file-roller 
+
+y thunar-dropbox-git
 
 
 # Docker
@@ -208,11 +211,6 @@ sudo wget -O /usr/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/ma
 sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubectx/master/utils.bash && sudo chmod +x /usr/bin/utils.bash
 y minikube
 
-# bspwm
-
-ln -fs ${DOTFILE}/bspwm ${HOME}/.config/bspwm
-ln -fs ${DOTFILE}/sxhkd ${HOME}/.config/sxhkd
-
 y polybar-git \
     envypn-font \
     siji-git 
@@ -223,9 +221,6 @@ i ttf-font-awesome \
         feh \
         gucharmap
 
-i libnotify \
-        xfce4-notifyd
-
 i xbindkeys
 ln -s $DOTFILE/.xbindkeysrc ${HOME}/.xbindkeysrc
 
@@ -233,25 +228,16 @@ ln -s $DOTFILE/.xbindkeysrc ${HOME}/.xbindkeysrc
 
 y code
 
-# gdrive 
-if [[ ! -f /usr/bin/drive ]]; then
-    y drive
-    drive init ${HOME}/gdrive
-    cd gdrive
-    drive pull
-    cd -
-fi
-
 # VirtualBox
+KERNELVERSION=$(uname -r | awk '{split($0,a,"."); print a[1]a[2]}')
+i virtualbox "linux${KERNELVERSION}-virtualbox-host-modules"
 
-i virtualbox virtualbox-host-dkms linux-headers linux-lts
+sudo gpasswd -a `whoami` vboxusers
 
 # OpenVPN
 i openvpn
 sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh
 chmod +x /etc/openvpn/update-resolv-conf.sh
-sudo ln -s $DOTFILE/bin/99-disable-wireless-when-wired /etc/NetworkManager/dispatcher.d/99-disable-wireless-when-wired
-
 
 # giantswarm 
 gi gsctl
@@ -260,7 +246,7 @@ ln -fs ${KB_DOTFILE}/gsctl ${HOME}/.config/gsctl
 
 
 #etcher
-i polkit lxqt-policykit
+#i polkit lxqt-policykit
 y etcher
 
 #bluetooth
@@ -270,15 +256,12 @@ i    pulseaudio-alsa \
     bluez-libs \
     bluez-utils
 
-
-echo "VSCODE extension"
-echo "Code Outline"
-echo "gitignore"
-echo "Go"
-echo "Kubernetes"
-echo "Open in Github"
-echo "Path Intellisense"
-echo "Python"
-echo "VSCode Great Icons"
-echo "vscode-helm"
-echo "YAML support"
+code-oss --install-extension patrys.vscode-code-outline
+code-oss --install-extension codezombiech.gitignore 
+code-oss --install-extension ms-vscode.go 
+code-oss --install-extension ms-kubernetes-tools.vscode-kubernetes-tools 
+code-oss --install-extension ziyasal.vscode-open-in-github 
+code-oss --install-extension christian-kohler.path-intellisense 
+code-oss --install-extension emmanuelbeziat.vscode-great-icons
+code-oss --install-extension technosophos.vscode-helm
+code-oss --install-extension redhat.vscode-yaml
