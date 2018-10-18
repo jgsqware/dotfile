@@ -28,7 +28,7 @@ alias dkc="docker-compose"
 # Applications
 alias stream='mkchromecast --encoder-backend ffmpeg --alsa-device hw:0,1 --name Bureau -b 320 --control'
 alias agv='ag --ignore=vendor/'
-alias code="code-oss"
+
 # Go
 alias godocs='godoc -http=":6060"'
 alias guv="glide update -v"
@@ -43,6 +43,11 @@ alias hd="helm del"
 alias hs="helm status"
 alias hi="helm install"
 alias hu="helm upgrade"
+
+function install_tiller() {
+    kubectl create -f ~/go/src/github.com/jgsqware/notes/tiller-rbac/tiller-clusterrolebinding.yaml
+    helm init --service-account tiller
+}
 
 function clone() {
     git clone git@github.com:jgsqware/${1}.git ~/go/src/github.com/jgsqware/${1}

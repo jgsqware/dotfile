@@ -23,7 +23,9 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Python
 export PATH=$PATH:$HOME/.cargo/bin
 # Ruby
-export PATH="$HOME/.rvm/bin:$PATH"
+export PATH="$HOME/.rvm/bin:$HOME/.gem/ruby/2.5.0/bin:$PATH"
+# PHP
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 
 # Aliases
@@ -53,3 +55,10 @@ source  ${DOTFILE}/completions/tmuxinator.zsh
 source <(kubectl completion zsh)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH=$PATH:/home/jgsqware/go/bi
+
+source '/home/jgsqware/lib/azure-cli/az.completion'
+alias code=/usr/bin/code --disable-gpu
+alias reset_time='sudo ntpd -gq'
+export PATH=$PATH:~/.jx/bin

@@ -24,7 +24,7 @@ function gi() {
         cd -
     fi
 }
-if false; then
+
 sudo pacman-key --refresh-keys
 # Git
 i git \
@@ -89,7 +89,9 @@ ln -sf ${KB_DOTFILE}/.gitignore_global ${HOME}/.gitignore_global
 # Shell
 
 sudo pacman -S termite
-i ttf-hack
+i ttf-hack \
+    ttf-dejavu
+
 mkdir -p ${HOME}/.config/termite
 ln -fs ${DOTFILE}/termite/termite.config ${HOME}/.config/termite/config
 ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
@@ -98,11 +100,11 @@ if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
 chsh -s $(which zsh)
-fi
+
 i i3
 ln -fs $DOTFILE/i3 ~/.config/i3
 y xfce4-i3-workspaces-plugin-git
-exit
+
 # fzf
 i fzf \
     the_silver_searcher
@@ -150,8 +152,8 @@ p mdv \
     yq \
     p7zip
 
+y python2-zeroconf
 y xreader \
-    python2-zeroconf \
     mkchromecast 
 
 i jq \
@@ -211,8 +213,8 @@ sudo wget -O /usr/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/ma
 sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubectx/master/utils.bash && sudo chmod +x /usr/bin/utils.bash
 y minikube
 
-y polybar-git \
-    envypn-font \
+
+y envypn-font \
     siji-git 
 ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
 
@@ -225,6 +227,7 @@ i xbindkeys
 ln -s $DOTFILE/.xbindkeysrc ${HOME}/.xbindkeysrc
 
 # visual studio code
+sudo echo '*               hard    nofile             10000' >> /etc/security/limits.conf
 
 y code
 
@@ -238,6 +241,7 @@ sudo gpasswd -a `whoami` vboxusers
 i openvpn
 sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh
 chmod +x /etc/openvpn/update-resolv-conf.sh
+nmcli connection import type openvpn file $KB_DOTFILE/jgsqware.ovpn
 
 # giantswarm 
 gi gsctl
