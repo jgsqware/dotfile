@@ -95,15 +95,15 @@ i ttf-hack \
 mkdir -p ${HOME}/.config/termite
 ln -fs ${DOTFILE}/termite/termite.config ${HOME}/.config/termite/config
 ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
+rm ${HOME}/.zsh_history && ln -s ${KB_DOTFILE}/.zsh_history ${HOME}/.zsh_history
 
 if [[ ! -d /usr/share/oh-my-zsh ]]; then
 	y oh-my-zsh-git 
 fi
 chsh -s $(which zsh)
 
-i i3
-ln -fs $DOTFILE/i3 ~/.config/i3
-y xfce4-i3-workspaces-plugin-git
+#i i3
+#ln -fs $DOTFILE/i3 ~/.config/i3
 
 # fzf
 i fzf \
@@ -148,26 +148,19 @@ ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 
 # Software
 
-p mdv \
-    yq \
+p yq \
     p7zip
 
 y python2-zeroconf
-y xreader \
-    mkchromecast 
 
 i jq \
     rsync \
     transmission-gtk \
     keepass \
-    rofi \
-    playerctl \
     dnsutils \
     xdg-utils \
     libu2f-host \
-    terraform \
     httpie \
-    vlc \
     tree  
 
 y spotify \
@@ -182,11 +175,11 @@ ln -s ${KB_DOTFILE}/aws.credentials ~/.aws/credentials
 
 # Thunar
 
-i thunar \
-    thunar-archive-plugin \
-    file-roller 
+#i thunar \
+#    thunar-archive-plugin \
+#    file-roller 
 
-y thunar-dropbox-git
+#y thunar-dropbox-git
 
 
 # Docker
@@ -194,14 +187,12 @@ y thunar-dropbox-git
 i docker \
     docker-compose
 
+sudo gpasswd -a `whoami` docker
+
 # Kubernetes
 
 if [[ ! -f /usr/bin/helm ]]; then
     y kubernetes-helm-bin
-    wget -O /tmp/helm-v2.6.2-linux-amd64.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.6.2-linux-amd64.tar.gz
-    tar xvf /tmp/helm-v2.6.2-linux-amd64.tar.gz
-    sudo mv linux-amd64/helm /usr/bin/helm_2.6.2
-    rm -rf /tmp/helm-v2.6.2-linux-amd64.tar.gz linux-amd64
 fi
 
 if [[ ! -f /usr/bin/kubectl ]]; then
@@ -216,7 +207,7 @@ y minikube
 
 y envypn-font \
     siji-git 
-ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
+#ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
 
 i ttf-font-awesome \
 	i3lock \
@@ -241,7 +232,7 @@ sudo gpasswd -a `whoami` vboxusers
 i openvpn
 sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh
 chmod +x /etc/openvpn/update-resolv-conf.sh
-nmcli connection import type openvpn file $KB_DOTFILE/jgsqware.ovpn
+#nmcli connection import type openvpn file $KB_DOTFILE/jgsqware.ovpn
 
 # giantswarm 
 gi gsctl
@@ -260,12 +251,12 @@ i    pulseaudio-alsa \
     bluez-libs \
     bluez-utils
 
-code-oss --install-extension patrys.vscode-code-outline
-code-oss --install-extension codezombiech.gitignore 
+#code-oss --install-extension patrys.vscode-code-outline
+#code-oss --install-extension codezombiech.gitignore 
 code-oss --install-extension ms-vscode.go 
-code-oss --install-extension ms-kubernetes-tools.vscode-kubernetes-tools 
+#code-oss --install-extension ms-kubernetes-tools.vscode-kubernetes-tools 
 code-oss --install-extension ziyasal.vscode-open-in-github 
 code-oss --install-extension christian-kohler.path-intellisense 
 code-oss --install-extension emmanuelbeziat.vscode-great-icons
-code-oss --install-extension technosophos.vscode-helm
-code-oss --install-extension redhat.vscode-yaml
+#code-oss --install-extension technosophos.vscode-helm
+#code-oss --install-extension redhat.vscode-yaml
