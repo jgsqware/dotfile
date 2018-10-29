@@ -1,5 +1,6 @@
-export ZSH=/usr/share/oh-my-zsh
+export ZSH=${HOME}/.oh-my-zsh
 ZSH_THEME="miloshadzic"
+BROWSER=/usr/bin/opera
 
 #ZSH_TMUX_AUTOSTART=true
 plugins=(git docker docker-compose go tmux aws)
@@ -23,9 +24,9 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 # Python
 export PATH=$PATH:$HOME/.cargo/bin
 # Ruby
-export PATH="$HOME/.rvm/bin:$HOME/.gem/ruby/2.5.0/bin:$PATH"
+#export PATH="$HOME/.rvm/bin:$HOME/.gem/ruby/2.5.0/bin:$PATH"
 # PHP
-export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+#export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 
 # Aliases
@@ -58,7 +59,7 @@ source <(kubectl completion zsh)
 
 export PATH=$PATH:/home/jgsqware/go/bi
 
-source '/home/jgsqware/lib/azure-cli/az.completion'
+#source '/home/jgsqware/lib/azure-cli/az.completion'
 alias code=/usr/bin/code --disable-gpu
 alias reset_time='sudo ntpd -gq'
 export PATH=$PATH:~/.jx/bin
