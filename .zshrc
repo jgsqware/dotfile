@@ -1,9 +1,10 @@
 export ZSH=${HOME}/.oh-my-zsh
+eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa && clear
 ZSH_THEME="miloshadzic"
-BROWSER=/usr/bin/opera
+BROWSER=/usr/bin/brave
 
 #ZSH_TMUX_AUTOSTART=true
-plugins=(git docker docker-compose go tmux aws)
+plugins=(git docker docker-compose go tmux aws gsctl)
 source $ZSH/oh-my-zsh.sh
 
 
@@ -49,7 +50,6 @@ done
 # Completion
 source /usr/share/fzf/key-bindings.zsh 
 source /usr/share/fzf/completion.zsh
-source <(helm completion zsh)
 source  ${DOTFILE}/completions/tmuxinator.zsh
 #source  ${DOTFILE}/completions/kubectx.zsh
 #source  ${DOTFILE}/completions/kubens.zsh
@@ -60,6 +60,5 @@ source <(kubectl completion zsh)
 export PATH=$PATH:/home/jgsqware/go/bi
 
 #source '/home/jgsqware/lib/azure-cli/az.completion'
-alias code=/usr/bin/code --disable-gpu
 alias reset_time='sudo ntpd -gq'
 export PATH=$PATH:~/.jx/bin

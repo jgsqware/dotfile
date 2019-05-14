@@ -1,0 +1,116 @@
+###########################
+#  Configuration
+###########################
+
+if '[ -f ~/.tmux.conf.local  ]' 'source ~/.tmux.conf.local'
+# use 256 term for pretty colors
+set-option -g default-terminal "screen-256color"
+
+# increase scroll-back history
+set -g history-limit 5000
+
+# use vim key bindings
+setw -g mode-keys vi
+
+# Setup 'v' to begin selection as in Vim
+bind P paste-buffer
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-selection
+bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+#bind -T copy-mode-vi y send -X copy-pipe "xclip -sel clip -i"
+
+# Update default binding of `Enter` to also use copy-pipe
+unbind -T copy-mode-vi Enter
+#bind -T copy-mode-vi enter send -X copy-pipe "xclip -sel clip -i"
+
+# Copy when mouse selection ends
+bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -sel clipboard -i"
+#bind-key -T copy-mode MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+# Bind ']' to use pbpaste
+#bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
+
+# enable mouse
+setw -g mouse on
+
+# decrease command delay (increases vim responsiveness)
+set -sg escape-time 1
+
+# increase repeat time for repeatable commands
+set -g repeat-time 1000
+
+# highlight window when it has new activity
+setw -g monitor-activity on
+set -g visual-activity on
+
+# re-number windows when one is closed
+#set -g renumber-windows on
+
+# don't auto rename windows
+setw -g automatic-rename off
+
+# start window and pane numbering at 1
+set -g base-index 1
+set -g pane-base-index 1
+
+# ----------------------
+# Status Bar
+# ----------------------
+set-option -g status on #enable the status bar
+set-option -g status-interval 2 #the number of seconds to wait before refreshing
+set-option -g status-justify left #justify the window list on the left
+set-option -g status-left-length '100' #the width in characters of the left side of the status line
+set-option -g status-right-length '100' #the width in characters of the right side of the status line
+set-window-option -g window-status-separator '' #the character to separate entries of the status line with
+#
+# general theme
+set-option -g status-style bg=colour236
+set-option -g message-style bg=colour235,fg=colour254,bold
+set-option -g message-command-style fg=colour253,bg=colour235
+set-window-option -g pane-border-style fg=colour235
+set-window-option -g pane-active-border-style fg=colour255
+set-window-option -g window-status-style fg=colour255,bg=colour236
+set-window-option -g window-status-activity-style fg=colour222,bold
+set-window-option -g window-status-bell-style fg=colour222,bold
+#
+# theme for active and inactive window titles respectively
+set-window-option -g window-status-current-format '#[fg=colour236,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour253,bg=colour235,bold] #I #[fg=colour167,bg=colour235,bold,nounderscore,noitalics]#[fg=colour253,bg=colour235,bold] #W #[fg=colour235,bg=colour236,nobold,nounderscore,noitalics]'
+set-window-option -g window-status-format ' #I #[fg=colour117,bg=colour236,nobold,nounderscore,noitalics]#[fg=colour255,bg=colour236] #W '
+#
+# theme for the left and right sides respectively
+set-option -g status-left '#[fg=colour117,bg=colour235,bold] #S #[fg=colour235,bg=colour236,nobold,nounderscore,noitalics]'
+set-option -g status-right ' #{?client_prefix,⌨  ,} #(/usr/local/bin/tmux-mem --format ":currentBytes [#[fg=:color]:spark#[default]] #[fg=:color]:percent#[default]") #(/usr/local/bin/tmux-cpu --format "[#[fg=:color]:spark#[default]] #[fg=:color]:percent#[default]")#[fg=colour235,bg=colour236,nobold,nounderscore,noitalics]#[fg=colour236,bg=colour235,nobold,nounderscore,noitalics]#[fg=colour117,bg=colour236] %H:%M %Y-%m-%d #[fg=colour235,bg=colour236,nobold,nounderscore,noitalics]#[fg=colour167,bg=colour235] ⎈ #(kubectl config current-context) on #(kcns) '
+
+###########################
+#  Key Bindings
+###########################
+
+# tmux prefix
+unbind C-b
+set-option -g prefix C-Space
+bind Space send-prefix
+
+# go to last window
+bind C-s last-window
+
+# force a reload of the config file
+unbind r
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# splitting
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+bind S choose-session
+
+# Smart pane switching with awareness of vim splits
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+bind -n M-h if-shell "$is_vim" "send-keys M-h" "select-pane -L"
+bind -n M-j if-shell "$is_vim" "send-keys M-j" "select-pane -D"
+bind -n M-k if-shell "$is_vim" "send-keys M-k" "select-pane -U"
+bind -n M-l if-shell "$is_vim" "send-keys M-l" "select-pane -R"
+bind -n M-\ if-shell "$is_vim" "send-keys M-\\" "select-pane -l"
+# Restore clear screen
+bind C-l send-keys 'C-l'
+
+set -g @plugin 'teemow/tmux-flecha'
+
+run '~/.tmux/plugins/tpm/tpm'
