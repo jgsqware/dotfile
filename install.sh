@@ -37,7 +37,9 @@ xyay    brave-bin \
 
 SSHKEY="/tmp/id_rsa"
 echo "Configure Enpass and put ssh key in ${SSHKEY}"
+
 read -p "Press any key to continue... " -n1 -s
+
 echo ""
 
 if [[ ! -d ${KB_DOTFILE} ]]; then
