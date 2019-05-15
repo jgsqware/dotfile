@@ -1,8 +1,0 @@
-# ~/.tmuxinator/cert-operator.yml
-
-name: cert-operator
-root: ~/workspace/go/src/github.com/giantswarm/cert-operator
-
-windows:
-  - nvim: nvim
-  - term: 

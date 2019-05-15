@@ -1,8 +1,0 @@
-# ~/.tmuxinator/k8scloudconfig.yml
-
-name: k8scloudconfig
-root: ~/go/src/github.com/giantswarm/k8scloudconfig
-
-windows:
-  - nvim: nvim
-  - term: 

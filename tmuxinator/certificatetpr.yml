@@ -1,8 +1,0 @@
-# ~/.tmuxinator/certificatetpr.yml
-
-name: certificatetpr
-root: ~/workspace/go/src/github.com/giantswarm/certificatetpr
-
-windows:
-  - nvim: nvim
-  - term: 

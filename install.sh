@@ -1,134 +1,157 @@
 #!/bin/bash
 set -euo pipefail
 
-function i() {
-    sudo pacman -S --noconfirm "$@"
+function xpacman() {
+    sudo pacman -S --noconfirm "$@" --needed --quiet
 }
-function y() {
-    yaourt -S --noconfirm "$@"
+function fpacman() {
+    (
+        set +o pipefail
+        yes y | sudo pacman -S --noconfirm "$@" --needed --quiet
+    )
+}
+function xyay() {
+        yay -S --noconfirm "$@" --needed --noredownload --norebuild --quiet
 }
 DOTFILE=${HOME}/.config/dotfile
 KB_DOTFILE=${HOME}/.config/kb_dotfile
 
 export XDG_CONFIG_HOME="${HOME}/.config"
 
-function p(){
+function xpip(){
     pip install "$1" --user --upgrade
 }
 
 function gi() {
     if [[ ! -f "${HOME}/go/bin/${1}" ]]; then
-        git clone git@github.com:giantswarm/${1}.git ~/go/src/github.com/giantswarm/${1}
-        cd ~/go/src/github.com/giantswarm/${1}
-        go install
-        cd -
+        (
+            git clone git@github.com:giantswarm/"${1}.git" ~/go/src/github.com/giantswarm/"${1}"
+            cd ~/go/src/github.com/giantswarm/"${1}"
+            go install
+        )
     fi
 }
 
-sudo pacman-key --refresh-keys
-# Git
-i git \
-    openssh \
-    cmake
+xyay    brave-bin \
+        enpass-bin \
 
-# yaourt
-if [[ ! -f /usr/bin/yaourt ]]; then
-    sudo pacman -S --needed base-devel git wget yajl
-    git clone https://aur.archlinux.org/package-query.git
-    cd package-query/
-    makepkg -si --noconfirm
-    cd ..
-    git clone https://aur.archlinux.org/yaourt.git
-    cd yaourt/
-    makepkg -si --noconfirm
-    cd ..
-    sudo rm -dR yaourt/ package-query/
-fi
-
-# Opera
-
-i opera \
-    mplayer
-
-if [[ ! -f /usr/bin/enpass ]]; then
-    y  enpass-bin
-fi
-
-# Keybase
-if [[ ! -f /usr/bin/keybase ]]; then
-    y keybase-bin
-fi
-run_keybase
-
-echo "Connect to keybase"
+SSHKEY="/tmp/id_rsa"
+echo "Configure Enpass and put ssh key in ${SSHKEY}"
 read -p "Press any key to continue... " -n1 -s
+echo ""
 
 if [[ ! -d ${KB_DOTFILE} ]]; then
-    git clone keybase://private/jgsqware/dotfile ${KB_DOTFILE} 
+    ssh-agent bash -c "ssh-add ${SSHKEY}; git clone git@github.com:jgsqware/kb_dotfile.git ${KB_DOTFILE}"  
 else
-    git --git-dir=${KB_DOTFILE} --work-tree=${KB_DOTFILE} pull -r
+    (
+        cd ${KB_DOTFILE}
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git stash"          
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git pull -r"  
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git stash pop" || echo   
+
+    )
+fi
+
+if [[ ! -d ${DOTFILE} ]]; then
+    ssh-agent bash -c "ssh-add ${SSHKEY}; git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}"  
+else
+    (
+        cd "${DOTFILE}"
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git stash"          
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git pull -r"  
+        ssh-agent bash -c "ssh-add ${SSHKEY}; git stash pop" || echo
+    )
 fi
 
 rm -rf ${HOME}/.ssh
 ln -fs ${KB_DOTFILE}/ssh/ ${HOME}/.ssh
 chmod 400 ${HOME}/.ssh/id_rsa
+chmod 644 ${HOME}/.ssh/id_rsa.pub
 gpg --import ${KB_DOTFILE}/gpg/gpg-private-keys.asc
 gpg --import ${KB_DOTFILE}/gpg/gpg-public-keys.asc
 gpg --import-ownertrust ${KB_DOTFILE}/gpg/otrust.txt
 
-if [[ ! -d ${HOME}/.config/dotfile ]]; then
-    git clone git@github.com:jgsqware/dotfile.git ${DOTFILE}
-else
-    git --git-dir=${HOME}/.config/dotfile/.git --work-tree=${HOME}/.config/dotfile pull -r
-fi
 ln -sf ${KB_DOTFILE}/.gitconfig ${HOME}/.gitconfig
 ln -sf ${KB_DOTFILE}/.gitignore_global ${HOME}/.gitignore_global
 
+xpacman openssh \
+        mplayer \
+        cmake \
+        termite \
+        ttf-hack \
+        ttf-dejavu \
+        fzf \
+        the_silver_searcher \
+        xclip \
+        go \
+        python-pip \
+        jq \
+        rsync \
+        keepass \
+        dnsutils \
+        xdg-utils \
+        libu2f-host \
+        httpie \
+        tree  \
+        ttf-font-awesome \
+        i3lock
 
+xyay    keybase-bin \
+        envypn-font \
+        siji-git \
+        python2-zeroconf \
+        spotify \
+        slack-desktop \
+        zoom
+    
 
-# Shell
+xpip    yq \
+        p7zip
 
-sudo pacman -S termite
-i ttf-hack \
-    ttf-dejavu
-
+### Termite ###
+xpacman termite
 mkdir -p ${HOME}/.config/termite
 ln -fs ${DOTFILE}/termite/termite.config ${HOME}/.config/termite/config
-ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
-rm ${HOME}/.zsh_history && ln -s ${KB_DOTFILE}/.zsh_history ${HOME}/.zsh_history
 
-if [[ ! -d /usr/share/oh-my-zsh ]]; then
-	y oh-my-zsh-git 
-fi
+### ZSH ###
+ln -fs ${DOTFILE}/.zshrc ${HOME}/.zshrc
+rm -f ${HOME}/.zsh_history && ln -fs ${KB_DOTFILE}/.zsh_history ${HOME}/.zsh_history
+
+xyay oh-my-zsh-git
 chsh -s $(which zsh)
 
-#i i3
-#ln -fs $DOTFILE/i3 ~/.config/i3
+rm -rf ${HOME}/.oh-my-zsh
+ln -fs /usr/share/oh-my-zsh/ ${HOME}/.oh-my-zsh
 
-# fzf
-i fzf \
-    the_silver_searcher
+### i3 ###
+fpacman i3-gaps
 
-# Tmux    
-i tmux \
-    xclip 
+rm -rf ${HOME}/.config/i3
+rm -rf ${HOME}/.config/i3status
+ln -fs ${DOTFILE}/i3 ${HOME}/.config/i3
+ln -fs ${DOTFILE}/i3status ${HOME}/.config/i3status
 
+### tmux ###
+
+xpacman tmux
+
+rm -rf ${HOME}/.tmux.conf
 ln -fs ${DOTFILE}/.tmux.conf ${HOME}/.tmux.conf
-git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+TPMDIR=${HOME}/.tmux/plugins/tpm
+if [[ ! -d ${TPMDIR} ]]; then
+    git clone https://github.com/tmux-plugins/tpm ${TPMDIR}
+else
+    (
+        cd ${TPMDIR}
+        git pull -r
+    )
+fi
 
-# Python
+### NeoVim ###
 
-i python2 \
-    python2-pip \
-    python-pip
-
-# Neovim
-
-i neovim \
-    python2-neovim \
-    python-neovim 
-
-y universal-ctags-git
+xpacman neovim \
+        python-neovim 
+xyay universal-ctags-git
 
 curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -138,125 +161,82 @@ ln -fs ${DOTFILE}/.vimrc ${HOME}/.config/nvim/init.vim
 mkdir -p ${HOME}/.config/nvim/colors
 ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
 
-nvim -c "PlugInstall|qa"
-
-# Go
-
-i go
-nvim -c "GoInstallBinaries|qa"
+nvim --headless +PlugInstall +qa
+nvim --headless +GoInstallBinaries +qa
 ${HOME}/.config/nvim/plugged/youcompleteme/install.py --go-completer
 
-# Software
+### AWS cli ###
 
-p yq \
-    p7zip
+xpip awscli
+mkdir -p ~/.aws
+ln -fs ${KB_DOTFILE}/aws.config ~/.aws/config
+ln -fs ${KB_DOTFILE}/aws.credentials ~/.aws/credentials
 
-y python2-zeroconf
+### Docker ###
 
-i jq \
-    rsync \
-    transmission-gtk \
-    keepass \
-    dnsutils \
-    xdg-utils \
-    libu2f-host \
-    httpie \
-    tree  
+xpacman docker \
+        docker-compose
 
-y spotify \
-    dropbox
-
-# AWS cli
-
-p awscli
-mkdir ~/.aws
-ln -s ${KB_DOTFILE}/aws.config ~/.aws/config
-ln -s ${KB_DOTFILE}/aws.credentials ~/.aws/credentials
-
-# Thunar
-
-#i thunar \
-#    thunar-archive-plugin \
-#    file-roller 
-
-#y thunar-dropbox-git
-
-
-# Docker
-
-i docker \
-    docker-compose
-
+sudo systemctl enable docker
+sudo systemctl start docker
 sudo gpasswd -a `whoami` docker
 
-# Kubernetes
+### Kubernetes ###
 
-if [[ ! -f /usr/bin/helm ]]; then
-    y kubernetes-helm-bin
-fi
+xyay    kubernetes-helm-bin \
+        kubectl \
+        kind-bin \
+        kubectx \
+        telepresence
 
-if [[ ! -f /usr/bin/kubectl ]]; then
-    y kubectl-bin
-fi
+### xbindkey ###
+xpacman xbindkeys
+ln -fs ${DOTFILE}/.xbindkeysrc ${HOME}/.xbindkeysrc
 
-sudo wget -O /usr/bin/kubectx https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx && sudo chmod +x /usr/bin/kubectx
-sudo wget -O /usr/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens && sudo chmod +x /usr/bin/kubens
-sudo wget -O /usr/bin/utils.bash https://raw.githubusercontent.com/ahmetb/kubectx/master/utils.bash && sudo chmod +x /usr/bin/utils.bash
-y minikube
+### vs code ###
+LINE='*               hard    nofile             10000'
+grep "${LINE}" -q /etc/security/limits.conf || echo "${LINE}" | sudo tee -a /etc/security/limits.conf
+xyay code
 
+code --install-extension 2gua.rainbow-brackets
+code --install-extension bierner.color-info
+code --install-extension bungcip.better-toml
+code --install-extension christian-kohler.path-intellisense
+code --install-extension dawhite.mustache
+code --install-extension emmanuelbeziat.vscode-great-icons
+code --install-extension eriklynd.json-tools
+code --install-extension foxhoundn.synthax
+code --install-extension GitHub.vscode-pull-request-github
+code --install-extension lihui.vs-color-picker
+code --install-extension marcostazi.VS-code-vagrantfile
+code --install-extension mauve.terraform
+code --install-extension max-SS.Cyberpunk
+code --install-extension ms-python.python
+code --install-extension ms-vscode.azure-account
+code --install-extension ms-vscode.Go
+code --install-extension ms-vscode.powershell
+code --install-extension octref.vetur
+code --install-extension pnp.polacode
+code --install-extension timonwong.shellcheck
 
-y envypn-font \
-    siji-git 
-#ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
+### VirtualBox ###
+xpacman virtualbox virtualbox-host-dkms
 
-i ttf-font-awesome \
-	i3lock \
-        feh \
-        gucharmap
+sudo gpasswd -a "$(whoami)" vboxusers
 
-i xbindkeys
-ln -s $DOTFILE/.xbindkeysrc ${HOME}/.xbindkeysrc
-
-# visual studio code
-sudo echo '*               hard    nofile             10000' >> /etc/security/limits.conf
-
-y code
-
-# VirtualBox
-KERNELVERSION=$(uname -r | awk '{split($0,a,"."); print a[1]a[2]}')
-i virtualbox "linux${KERNELVERSION}-virtualbox-host-modules"
-
-sudo gpasswd -a `whoami` vboxusers
-
-# OpenVPN
-i openvpn
-sudo ln -fs ${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh
+### OpenVPN ##
+xpacman openvpn
+sudo ln -fs "${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh"
 chmod +x /etc/openvpn/update-resolv-conf.sh
-#nmcli connection import type openvpn file $KB_DOTFILE/jgsqware.ovpn
 
-# giantswarm 
+### Giant Swarm ##
 gi gsctl
 gi opsctl
-ln -fs ${KB_DOTFILE}/gsctl ${HOME}/.config/gsctl
+ln -fs "${KB_DOTFILE}/gsctl" "${HOME}/.config/gsctl"
 
-
-#etcher
-#i polkit lxqt-policykit
-y etcher
-
-#bluetooth
-i    pulseaudio-alsa \
-    pulseaudio-bluetooth \
-    bluez \
-    bluez-libs \
-    bluez-utils
-
-#code-oss --install-extension patrys.vscode-code-outline
-#code-oss --install-extension codezombiech.gitignore 
-code-oss --install-extension ms-vscode.go 
-#code-oss --install-extension ms-kubernetes-tools.vscode-kubernetes-tools 
-code-oss --install-extension ziyasal.vscode-open-in-github 
-code-oss --install-extension christian-kohler.path-intellisense 
-code-oss --install-extension emmanuelbeziat.vscode-great-icons
-#code-oss --install-extension technosophos.vscode-helm
-#code-oss --install-extension redhat.vscode-yaml
+## Pulse Audio ###
+xpacman pulseaudio-alsa \
+        pulseaudio-bluetooth \
+        bluez \
+        bluez-libs \
+        bluez-utils

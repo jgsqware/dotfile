@@ -4,7 +4,7 @@ ZSH_THEME="miloshadzic"
 BROWSER=/usr/bin/brave
 
 #ZSH_TMUX_AUTOSTART=true
-plugins=(git docker docker-compose go tmux aws gsctl)
+plugins=(git docker docker-compose go tmux aws)
 source $ZSH/oh-my-zsh.sh
 
 
@@ -50,9 +50,6 @@ done
 # Completion
 source /usr/share/fzf/key-bindings.zsh 
 source /usr/share/fzf/completion.zsh
-source  ${DOTFILE}/completions/tmuxinator.zsh
-#source  ${DOTFILE}/completions/kubectx.zsh
-#source  ${DOTFILE}/completions/kubens.zsh
 source <(kubectl completion zsh)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
