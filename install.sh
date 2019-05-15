@@ -7,7 +7,7 @@ function xpacman() {
 function fpacman() {
     (
         set +o pipefail
-        yes y | sudo pacman -S --noconfirm "$@" --needed --quiet
+        yes y | sudo pacman -S "$@" --needed --quiet
     )
 }
 function xyay() {
