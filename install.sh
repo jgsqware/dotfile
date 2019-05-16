@@ -32,6 +32,11 @@ function gi() {
     fi
 }
 
+### Set Locale to en_US.UTF-8 ###
+localectl set-locale LANG=en_US.UTF-8
+unset LANG
+source /etc/profile.d/locale.sh
+
 xyay    brave-bin \
         enpass-bin \
 
@@ -188,8 +193,8 @@ sudo gpasswd -a `whoami` docker
 xyay    kubernetes-helm-bin \
         kubectl \
         kind-bin \
-        kubectx \
-        telepresence
+        kubectx # \
+        # telepresence # currently borked installation
 
 ### xbindkey ###
 xpacman xbindkeys
