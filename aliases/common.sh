@@ -18,7 +18,7 @@ alias projo="xrandr --output HDMI1 --mode 1280x1024 --output eDP1 --mode 1280x10
 # Shell Aliases
 alias dotconfig="vim ${DOTFILE}"
 alias h="history"
-alias hg="history | grep -i"
+alias hgrep="history | grep -i"
 alias pg="ps aux | grep -i"
 alias pr="sudo pacman -Rs"
 alias calc="gcalccmd"
@@ -51,5 +51,12 @@ alias hu="helm upgrade"
 
 
 function clone() {
-    git clone git@github.com:jgsqware/${1}.git ~/go/src/github.com/jgsqware/${1}
+    git clone git@github.com:${1}.git ~/go/src/github.com/${1}
+}
+
+alias multi-kind="kind create cluster --config /home/jgsqware/go/src/github.com/jgsqware/notes/kind-multi-node/kind-config.yaml"
+
+function kindconfig() {
+    export KUBECONFIG="$(kind get kubeconfig-path --name="$1")"
+    kubectl cluster-info
 }
