@@ -101,15 +101,16 @@ xpacman openssh \
         httpie \
         tree  \
         ttf-font-awesome \
-        i3lock
+        i3lock \
+        slack
 
 xyay    keybase-bin \
         envypn-font \
         siji-git \
         python2-zeroconf \
         spotify \
-        slack-desktop \
-        zoom
+        zoom \
+        wat
     
 
 xpip    yq \
@@ -226,10 +227,10 @@ code --install-extension octref.vetur
 code --install-extension pnp.polacode
 code --install-extension timonwong.shellcheck
 
-### VirtualBox ###
-xpacman virtualbox virtualbox-host-dkms
+# ### VirtualBox ###
+# xpacman virtualbox virtualbox-host-dkms
 
-sudo gpasswd -a "$(whoami)" vboxusers
+# sudo gpasswd -a "$(whoami)" vboxusers
 
 ### OpenVPN ##
 xpacman openvpn
@@ -241,9 +242,13 @@ gi gsctl
 gi opsctl
 ln -fs "${KB_DOTFILE}/gsctl" "${HOME}/.config/gsctl"
 
-## Pulse Audio ###
-xpacman pulseaudio-alsa \
-        pulseaudio-bluetooth \
-        bluez \
-        bluez-libs \
-        bluez-utils
+# ## Pulse Audio ###
+# xpacman pulseaudio-alsa \
+#         pulseaudio-bluetooth \
+#         bluez \
+#         bluez-libs \
+#         bluez-utils
+
+## Brave app ##
+mkdir -p ~/.local/share/applications/
+cp "${DOTFILE}/brave-apps/brave*" ~/.local/share/applications/

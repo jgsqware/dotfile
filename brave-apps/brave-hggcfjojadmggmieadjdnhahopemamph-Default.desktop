@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Notion
+Exec=/usr/lib/brave-bin/brave --profile-directory=Default --app-id=hggcfjojadmggmieadjdnhahopemamph
+Icon=brave-hggcfjojadmggmieadjdnhahopemamph-Default
+StartupWMClass=crx_hggcfjojadmggmieadjdnhahopemamph
