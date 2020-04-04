@@ -135,9 +135,25 @@ ln -fs /usr/share/oh-my-zsh/ ${HOME}/.oh-my-zsh
 fpacman i3-gaps
 
 rm -rf ${HOME}/.config/i3
-rm -rf ${HOME}/.config/i3status
+# rm -rf ${HOME}/.config/i3status
 ln -fs ${DOTFILE}/i3 ${HOME}/.config/i3
-ln -fs ${DOTFILE}/i3status ${HOME}/.config/i3status
+# ln -fs ${DOTFILE}/i3status ${HOME}/.config/i3status
+xpacman polybar
+rm -rf ${HOME}/.config/polybar
+ln -fs ${DOTFILE}/polybar ${HOME}/.config/polybar
+
+cat > /etc/polkit-1/rules.d/10-jgsqware.rules << POLKIT
+polkit.addRule(function(action, subject) {
+    polkit.log("action=" + action);
+    polkit.log("subject=" + subject);
+    if (action.id == "org.freedesktop.systemd1.manage-units" &&
+        (action.lookup("unit") == "openvpn-client@gridscale.service" || action.lookup("unit") == "openvpn-client@vultr.service")&&
+        subject.user == "jgsqware") {
+        return polkit.Result.YES;
+    }
+});
+POLKIT
+
 
 ### tmux ###
 
@@ -167,7 +183,8 @@ ln -fs ${DOTFILE}/.vimrc ${HOME}/.vimrc
 ln -fs ${HOME}/.local/share/nvim/ ${HOME}/.config/nvim
 ln -fs ${DOTFILE}/.vimrc ${HOME}/.config/nvim/init.vim
 mkdir -p ${HOME}/.config/nvim/colors
-ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
+# ln -fs ${DOTFILE}/nvim/colors/codedark.vim ${HOME}/.config/nvim/colors/codedark.vim
+ln -fs ${DOTFILE}/nvim/colors/nord.vim ${HOME}/.config/nvim/colors/nord.vim
 
 nvim --headless +PlugInstall +qa
 nvim --headless +GoInstallBinaries +qa
@@ -206,26 +223,41 @@ LINE='*               hard    nofile             10000'
 grep "${LINE}" -q /etc/security/limits.conf || echo "${LINE}" | sudo tee -a /etc/security/limits.conf
 xyay code
 
-code --install-extension 2gua.rainbow-brackets
+code --install-extension ahebrank.yaml2json
+code --install-extension arcticicestudio.nord-visual-studio-code
 code --install-extension bierner.color-info
 code --install-extension bungcip.better-toml
 code --install-extension christian-kohler.path-intellisense
+code --install-extension ckolkman.vscode-postgres
+code --install-extension codezombiech.gitignore
+code --install-extension CoenraadS.bracket-pair-colorizer-2
 code --install-extension dawhite.mustache
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension dsznajder.es7-react-js-snippets
 code --install-extension emmanuelbeziat.vscode-great-icons
 code --install-extension eriklynd.json-tools
+code --install-extension esbenp.prettier-vscode
+code --install-extension formulahendry.auto-rename-tag
 code --install-extension foxhoundn.synthax
 code --install-extension GitHub.vscode-pull-request-github
+code --install-extension ipedrazas.kubernetes-snippets
 code --install-extension lihui.vs-color-picker
 code --install-extension marcostazi.VS-code-vagrantfile
 code --install-extension mauve.terraform
-code --install-extension max-SS.Cyberpunk
+code --install-extension michelemelluso.gitignore
+code --install-extension ms-azuretools.vscode-docker
 code --install-extension ms-python.python
-code --install-extension ms-vscode.azure-account
 code --install-extension ms-vscode.Go
-code --install-extension ms-vscode.powershell
+code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension octref.vetur
+code --install-extension OfHumanBondage.react-proptypes-intellisense
+code --install-extension PKief.material-icon-theme
 code --install-extension pnp.polacode
+code --install-extension redhat.vscode-yaml
+code --install-extension TCL.reactreduxcoursesnippets
 code --install-extension timonwong.shellcheck
+code --install-extension Tyriar.sort-lines
+code --install-extension wmontalvo.vsc-jsonsnippets
 
 # ### VirtualBox ###
 # xpacman virtualbox virtualbox-host-dkms
@@ -234,21 +266,12 @@ code --install-extension timonwong.shellcheck
 
 ### OpenVPN ##
 xpacman openvpn
-sudo ln -fs "${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh"
+sudo cp "${KB_DOTFILE}/update-resolv-conf.sh /etc/openvpn/update-resolv-conf.sh"
 chmod +x /etc/openvpn/update-resolv-conf.sh
+sudo cp /home/jgsqware/.config/kb_dotfile/gridscale.ovpn /etc/openvpn/client/gridscale.conf
+sudo cp /home/jgsqware/.config/kb_dotfile/vultr.ovpn /etc/openvpn/client/vultr.conf
 
 ### Giant Swarm ##
 gi gsctl
 gi opsctl
 ln -fs "${KB_DOTFILE}/gsctl" "${HOME}/.config/gsctl"
-
-# ## Pulse Audio ###
-# xpacman pulseaudio-alsa \
-#         pulseaudio-bluetooth \
-#         bluez \
-#         bluez-libs \
-#         bluez-utils
-
-## Brave app ##
-mkdir -p ~/.local/share/applications/
-cp "${DOTFILE}/brave-apps/brave*" ~/.local/share/applications/
