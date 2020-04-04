@@ -4,7 +4,7 @@ if has('nvim')
     set termguicolors
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
     set inccommand=nosplit " Live substitution"
-    set background=dark
+    "set background=dark
     set t_Co=256
 endif
 
@@ -25,7 +25,8 @@ set autowrite
 set laststatus=2
 set updatetime=100
 "colorscheme base16-oceanicnext
-colorscheme  codedark
+"colorscheme  codedark
+colorscheme nord
 "set background=light
 "colorscheme PaperColor
 
@@ -220,7 +221,7 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tomasiser/vim-code-dark'
+"Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'ErichDonGubler/nerdtree-plugin-open-in-file-browser' | Plug 'ErichDonGubler/vim-file-browser-integration'
@@ -228,8 +229,9 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
-Plug 'NLKNguyen/papercolor-theme'
+"Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
